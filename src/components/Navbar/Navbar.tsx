@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { toggleCart } from '../../features/cart/cartSlice';
+import { useAppSelector } from '../../app/hooks';
 import { selectCartCount } from '../../features/cart/cartSelectors';
 import phoneIcon from '../../assets/icons/phone.svg';
 import mailIcon from '../../assets/icons/mail.svg';
@@ -33,7 +32,6 @@ const NAV_LINKS = [
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const dispatch = useAppDispatch();
   const cartCount = useAppSelector(selectCartCount);
 
   return (
@@ -98,7 +96,6 @@ export default function Navbar() {
             <button
               className="navbar__action"
               aria-label={`Cart, ${cartCount} item${cartCount === 1 ? '' : 's'}`}
-              onClick={() => dispatch(toggleCart())}
             >
               <img src={cartIcon} alt="" className="navbar__action-icon" />
               <span className="navbar__count">{cartCount}</span>
