@@ -1,15 +1,15 @@
 import './Testimonials.css';
 
 const galleryPhotos = [
-  'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=300&q=80',
-  'https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=300&q=80',
-  'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=300&q=80',
-  'https://images.unsplash.com/photo-1490750967868-88df5691cc49?w=300&q=80',
-  'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&q=80',
-  'https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?w=300&q=80',
-  'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&q=80',
-  'https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?w=300&q=80',
-  'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=300&q=80',
+  'https://picsum.photos/seed/g1/300/300',
+  'https://picsum.photos/seed/g2/300/300',
+  'https://picsum.photos/seed/g3/300/300',
+  'https://picsum.photos/seed/g4/300/300',
+  'https://picsum.photos/seed/g5/300/300',
+  'https://picsum.photos/seed/g6/300/300',
+  'https://picsum.photos/seed/g7/300/300',
+  'https://picsum.photos/seed/g8/300/300',
+  'https://picsum.photos/seed/g9/300/300',
 ];
 
 export default function Testimonials() {
@@ -21,7 +21,7 @@ export default function Testimonials() {
             <h2 className="testimonials__title">What they say about us</h2>
             <div className="testimonials__avatar">
               <img
-                src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=200&q=80"
+                src="https://picsum.photos/seed/avatar/200/200"
                 alt="Regina Miles"
               />
             </div>
@@ -48,7 +48,7 @@ export default function Testimonials() {
           <div className="testimonials__gallery">
             {galleryPhotos.map((src, i) => (
               <div key={i} className="testimonials__photo">
-                <img src={src} alt={`Gallery ${i + 1}`} loading="lazy" />
+                <img src={src} alt={`Gallery ${i + 1}`} />
               </div>
             ))}
           </div>

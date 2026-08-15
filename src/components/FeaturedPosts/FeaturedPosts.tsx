@@ -3,7 +3,7 @@ import './FeaturedPosts.css';
 const posts = [
   {
     id: 1,
-    img: 'https://images.unsplash.com/photo-1540518614846-7eded433c457?w=600&q=80',
+    img: 'https://picsum.photos/seed/bedroom/600/400',
     title: "Loudest à la Madison #1 (L'integral)",
     desc: 'We focus on ergonomics and meeting you where you work. It\'s only a keystroke away.',
     date: '22 April 2021',
@@ -11,7 +11,7 @@ const posts = [
   },
   {
     id: 2,
-    img: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&q=80',
+    img: 'https://picsum.photos/seed/kitchen/600/400',
     title: "Loudest à la Madison #1 (L'integral)",
     desc: 'We focus on ergonomics and meeting you where you work. It\'s only a keystroke away.',
     date: '22 April 2021',
@@ -19,7 +19,7 @@ const posts = [
   },
   {
     id: 3,
-    img: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=600&q=80',
+    img: 'https://picsum.photos/seed/interior/600/400',
     title: "Loudest à la Madison #1 (L'integral)",
     desc: 'We focus on ergonomics and meeting you where you work. It\'s only a keystroke away.',
     date: '22 April 2021',
@@ -40,7 +40,7 @@ export default function FeaturedPosts() {
           {posts.map((post) => (
             <article key={post.id} className="post-card">
               <div className="post-card__img">
-                <img src={post.img} alt={post.title} loading="lazy" />
+                <img src={post.img} alt={post.title} />
                 <span className="post-card__badge">NEW</span>
               </div>
               <div className="post-card__body">
