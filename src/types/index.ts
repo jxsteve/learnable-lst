@@ -45,20 +45,58 @@ export interface Product {
   images: string[];
 }
 
+/**
+ * The subset of fields the product list requests via `?select=`. Asking for
+ * only what the card renders cuts the payload by ~40%, so the list genuinely
+ * does not carry the rest — this type keeps that honest.
+ */
+export type ProductSummary = Pick<
+  Product,
+  | 'id'
+  | 'title'
+  | 'brand'
+  | 'category'
+  | 'price'
+  | 'discountPercentage'
+  | 'rating'
+  | 'stock'
+  | 'availabilityStatus'
+  | 'thumbnail'
+  | 'images'
+  | 'reviews'
+>;
+
+/** Field list sent as `?select=`, derived from ProductSummary's keys. */
+export const PRODUCT_SUMMARY_FIELDS: ReadonlyArray<keyof ProductSummary> = [
+  'id',
+  'title',
+  'brand',
+  'category',
+  'price',
+  'discountPercentage',
+  'rating',
+  'stock',
+  'availabilityStatus',
+  'thumbnail',
+  'images',
+  'reviews',
+];
+
 export interface ProductsResponse {
-  products: Product[];
+  products: ProductSummary[];
   total: number;
   skip: number;
   limit: number;
 }
 
 export interface CartItem {
-  product: Product;
+  /** Cards add from the list, so the cart holds the summary shape. */
+  product: ProductSummary;
   quantity: number;
 }
 
 export interface CartState {
   items: CartItem[];
   /** Drives the "Successfully added to basket" notification; null when dismissed. */
-  lastAdded: Product | null;
+  lastAdded: ProductSummary | null;
 }

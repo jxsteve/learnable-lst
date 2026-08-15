@@ -234,7 +234,11 @@
 
   .navbar { padding: 0; }
   .navbar__inner { height: 70px; padding: 0 24px; }
-  .navbar__actions { margin-right: -15px; }
+  /* the desktop negative margin pushes the hamburger off-screen on narrow
+     viewports, where there is no wide gutter to absorb it */
+  .navbar__actions { margin-right: 0; }
+  .navbar__action { padding: 15px 8px; }
+  .navbar__hamburger { margin-left: 12px; }
 
   /* Stacked, centred menu — Figma mobile navbar-nav (32:2241): 270px tall,
      four 30px items separated by 50px gaps. */

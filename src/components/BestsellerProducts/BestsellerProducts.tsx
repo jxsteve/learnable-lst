@@ -8,8 +8,12 @@ import './BestsellerProducts.css';
 const PAGE_SIZE = 10;
 
 export default function BestsellerProducts() {
-  const [limit, setLimit] = useState(PAGE_SIZE);
-  const { data, isLoading, isFetching, isError, refetch } = useGetProductsQuery({ limit });
+  // Offset of the page being requested; earlier pages stay merged in the cache.
+  const [skip, setSkip] = useState(0);
+  const { data, isLoading, isFetching, isError, refetch } = useGetProductsQuery({
+    limit: PAGE_SIZE,
+    skip,
+  });
 
   const products = data?.products ?? [];
   const hasMore = data ? products.length < data.total : false;
@@ -44,7 +48,7 @@ export default function BestsellerProducts() {
               <button
                 className="bestseller__more"
                 disabled={isFetching}
-                onClick={() => setLimit((current) => current + PAGE_SIZE)}
+                onClick={() => setSkip(products.length)}
               >
                 {isFetching ? 'LOADING…' : 'LOAD MORE PRODUCTS'}
               </button>

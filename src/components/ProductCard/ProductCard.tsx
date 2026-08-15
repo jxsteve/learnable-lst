@@ -1,4 +1,4 @@
-import type { Product } from '../../types';
+import type { ProductSummary } from '../../types';
 import { useAppDispatch } from '../../app/hooks';
 import { addToCart } from '../../features/cart/cartSlice';
 import { formatPrice } from '../../utils/format';
@@ -9,7 +9,7 @@ import heartIcon from '../../assets/icons/pc-heart.svg';
 import './ProductCard.css';
 
 interface Props {
-  product: Product;
+  product: ProductSummary;
 }
 
 const MAX_STARS = 5;
