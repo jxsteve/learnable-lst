@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { dismissAddedNotification } from '../../features/cart/cartSlice';
-import { formatPrice } from '../../utils/format';
+import { formatPrice, getSalePrice } from '../../utils/format';
 import closeIcon from '../../assets/icons/pc-close.svg';
 import './AddToBasketNotification.css';
 
@@ -34,7 +34,7 @@ export default function AddToBasketNotification() {
 
   if (!product) return null;
 
-  const salePrice = product.price * (1 - product.discountPercentage / 100);
+  const salePrice = getSalePrice(product);
 
   return (
     <div className="basket-toast" role="status" aria-live="polite">

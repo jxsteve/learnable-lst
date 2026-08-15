@@ -4,6 +4,7 @@ import type { CartState, ProductSummary } from '../../types';
 const initialState: CartState = {
   items: [],
   lastAdded: null,
+  isOpen: false,
 };
 
 const cartSlice = createSlice({
@@ -21,6 +22,14 @@ const cartSlice = createSlice({
     },
     dismissAddedNotification(state) {
       state.lastAdded = null;
+    },
+    closeCart(state) {
+      state.isOpen = false;
+    },
+    toggleCart(state) {
+      state.isOpen = !state.isOpen;
+      // the drawer shows the same information, so retire the toast
+      if (state.isOpen) state.lastAdded = null;
     },
     removeFromCart(state, action: PayloadAction<number>) {
       state.items = state.items.filter((i) => i.product.id !== action.payload);
@@ -50,6 +59,8 @@ export const {
   decrementQuantity,
   clearCart,
   dismissAddedNotification,
+  closeCart,
+  toggleCart,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

@@ -14,3 +14,15 @@ const priceFormatter = new Intl.NumberFormat(LOCALE, {
 export function formatPrice(value: number): string {
   return priceFormatter.format(value);
 }
+
+/**
+ * dummyjson quotes `price` before the available discount, so the amount a
+ * customer actually pays is derived. Shared by the product card, the
+ * add-to-basket notification and the cart so they can never disagree.
+ */
+export function getSalePrice(product: {
+  price: number;
+  discountPercentage: number;
+}): number {
+  return product.price * (1 - product.discountPercentage / 100);
+}

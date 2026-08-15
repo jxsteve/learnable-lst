@@ -1,7 +1,7 @@
 import type { ProductSummary } from '../../types';
 import { useAppDispatch } from '../../app/hooks';
 import { addToCart } from '../../features/cart/cartSlice';
-import { formatPrice } from '../../utils/format';
+import { formatPrice, getSalePrice } from '../../utils/format';
 import starFilled from '../../assets/icons/pc-star-filled.svg';
 import starEmpty from '../../assets/icons/pc-star-empty.svg';
 import compareIcon from '../../assets/icons/pc-compare.svg';
@@ -19,7 +19,7 @@ export default function ProductCard({ product }: Props) {
 
   const discount = Math.round(product.discountPercentage);
   const hasDiscount = discount >= 1;
-  const salePrice = product.price * (1 - product.discountPercentage / 100);
+  const salePrice = getSalePrice(product);
   const outOfStock = product.stock === 0 || product.availabilityStatus === 'Out of Stock';
 
   // Roughly half of dummyjson's catalogue has no brand, so fall back to category.
