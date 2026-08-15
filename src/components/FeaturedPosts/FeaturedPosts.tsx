@@ -1,80 +1,64 @@
+import SectionHeading from '../SectionHeading/SectionHeading';
+import blog1 from '../../assets/images/blog-1.png';
+import blog2 from '../../assets/images/blog-2.png';
+import blog3 from '../../assets/images/blog-3.png';
+import calendarIcon from '../../assets/icons/calendar.svg';
+import commentsIcon from '../../assets/icons/comments.svg';
+import arrowNextIcon from '../../assets/icons/arrow-next.svg';
 import './FeaturedPosts.css';
 
-const posts = [
-  {
-    id: 1,
-    img: 'https://picsum.photos/seed/bedroom/600/400',
-    title: "Loudest à la Madison #1 (L'integral)",
-    desc: 'We focus on ergonomics and meeting you where you work. It\'s only a keystroke away.',
-    date: '22 April 2021',
-    comments: '10 comments',
-  },
-  {
-    id: 2,
-    img: 'https://picsum.photos/seed/kitchen/600/400',
-    title: "Loudest à la Madison #1 (L'integral)",
-    desc: 'We focus on ergonomics and meeting you where you work. It\'s only a keystroke away.',
-    date: '22 April 2021',
-    comments: '10 comments',
-  },
-  {
-    id: 3,
-    img: 'https://picsum.photos/seed/interior/600/400',
-    title: "Loudest à la Madison #1 (L'integral)",
-    desc: 'We focus on ergonomics and meeting you where you work. It\'s only a keystroke away.',
-    date: '22 April 2021',
-    comments: '10 comments',
-  },
+const POSTS = [
+  { id: 1, image: blog1 },
+  { id: 2, image: blog2 },
+  { id: 3, image: blog3 },
 ];
 
 export default function FeaturedPosts() {
   return (
-    <section className="featured-posts">
-      <div className="container">
-        <div className="featured-posts__header">
-          <p className="section-tag">Practice Advice</p>
-          <h2 className="section-title">Featured Posts</h2>
-        </div>
+    <section className="posts">
+      <div className="posts__container">
+        <SectionHeading tag="Practice Advice" title="Featured Posts" variant="accent" />
 
-        <div className="featured-posts__grid">
-          {posts.map((post) => (
-            <article key={post.id} className="post-card">
-              <div className="post-card__img">
-                <img src={post.img} alt={post.title} />
-                <span className="post-card__badge">NEW</span>
-              </div>
-              <div className="post-card__body">
-                <div className="post-card__tags">
-                  <span className="post-card__tag">Google</span>
-                  <span className="post-card__tag-sep">|</span>
-                  <span className="post-card__tag--plain">Trending</span>
-                  <span className="post-card__tag-sep">|</span>
-                  <span className="post-card__tag--plain">New</span>
+        <div className="posts__row">
+          {POSTS.map((post) => (
+            <div key={post.id} className="posts__col">
+              <article className="post-card">
+                <div className="post-card__media">
+                  <img src={post.image} alt="" className="post-card__image" loading="lazy" />
+                  <span className="post-card__badge">NEW</span>
                 </div>
-                <h3 className="post-card__title">{post.title}</h3>
-                <p className="post-card__desc">{post.desc}</p>
-                <div className="post-card__meta">
-                  <span className="post-card__meta-item">
-                    <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                      <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
-                    </svg>
-                    {post.date}
-                  </span>
-                  <span className="post-card__meta-item">
-                    <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                      <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
-                    </svg>
-                    {post.comments}
-                  </span>
+
+                <div className="post-card__body">
+                  <div className="post-card__tags">
+                    <span className="post-card__tag post-card__tag--accent">Google</span>
+                    <span className="post-card__tag">Trending</span>
+                    <span className="post-card__tag">New</span>
+                  </div>
+
+                  <h3 className="post-card__title">Loudest à la Madison #1 (L'integral)</h3>
+
+                  <p className="post-card__excerpt">
+                    We focus on ergonomics and meeting you where you work. It's only a keystroke away.
+                  </p>
+
+                  <div className="post-card__meta">
+                    <span className="post-card__meta-item">
+                      <img src={calendarIcon} alt="" className="post-card__meta-icon" />
+                      22 April 2021
+                    </span>
+                    <span className="post-card__meta-item">
+                      <img src={commentsIcon} alt="" className="post-card__meta-icon post-card__meta-icon--chart" />
+                      10 comments
+                    </span>
+                  </div>
+
+                  <a href="#" className="post-card__link">
+                    Learn More
+                    <img src={arrowNextIcon} alt="" className="post-card__arrow" />
+                  </a>
                 </div>
-                <a href="#" className="post-card__learn">
-                  Learn More
-                  <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                    <polyline points="9 18 15 12 9 6"/>
-                  </svg>
-                </a>
-              </div>
-            </article>
+              </article>
+            </div>
           ))}
         </div>
       </div>

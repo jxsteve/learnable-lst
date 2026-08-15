@@ -1,24 +1,20 @@
+import ctaBackground from '../../assets/images/cta-background.png';
 import './CtaBanner.css';
 
 export default function CtaBanner() {
   return (
-    <section className="cta-banner">
-      <img
-        className="cta-banner__bg"
-        src="https://images.unsplash.com/photo-1556909114-44e3e70034e2?w=900&q=80"
-        alt="Kitchen utensils"
-      />
-      <div className="container">
-        <div className="cta-banner__content">
-          <p className="cta-banner__tag">Designing Better Experience</p>
-          <h2 className="cta-banner__title">
-            Problems trying to resolve<br />the conflict between
-          </h2>
-          <p className="cta-banner__desc">
+    <section className="cta">
+      <img src={ctaBackground} alt="" className="cta__background" />
+
+      <div className="cta__container">
+        <div className="cta__content">
+          <p className="cta__tag">Designing Better Experience</p>
+          <h2 className="cta__title">Problems trying to resolve the conflict between </h2>
+          <p className="cta__text">
             Problems trying to resolve the conflict between the two major realms of Classical physics:
           </p>
-          <p className="cta-banner__price">$16.48</p>
-          <a href="#bestseller" className="btn-primary">ADD YOUR CALL TO ACTION</a>
+          <p className="cta__price">$16.48</p>
+          <button className="cta__button">ADD YOUR CALL TO ACTION</button>
         </div>
       </div>
     </section>

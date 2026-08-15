@@ -1,100 +1,101 @@
+/* Product card — Figma: "Product card" (32:1884). 183px wide, 238px image,
+   info block padded 25/25/35 with 10px gaps. */
+
 .product-card {
+  display: flex;
+  flex-direction: column;
   background: var(--color-white);
-  cursor: pointer;
 }
 
-.product-card__img-wrap {
+.product-card__media {
   position: relative;
+  height: 238px;
   overflow: hidden;
-  background: var(--color-light-gray);
-  aspect-ratio: 1 / 1;
 }
 
-.product-card__img-wrap img {
+.product-card__image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.4s;
+  transition: transform 0.4s ease;
 }
 
-.product-card:hover .product-card__img-wrap img {
-  transform: scale(1.06);
-}
+.product-card:hover .product-card__image { transform: scale(1.05); }
 
-/* Hover action overlay */
+/* ── Hover actions (additive — the design shows a bare card) ── */
 .product-card__actions {
   position: absolute;
-  inset: 0;
-  background: rgba(37, 43, 66, 0.3);
+  right: 10px;
+  bottom: 10px;
   display: flex;
-  align-items: center;
-  justify-content: center;
   gap: 8px;
   opacity: 0;
-  transition: opacity 0.3s;
+  transform: translateY(6px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
-.product-card:hover .product-card__actions {
+.product-card:hover .product-card__actions,
+.product-card:focus-within .product-card__actions {
   opacity: 1;
+  transform: translateY(0);
 }
 
-.product-card__action-btn {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: var(--color-white);
-  display: flex;
+.product-card__action {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: none;
-  cursor: pointer;
-  color: var(--color-dark);
-  transition: background 0.2s, color 0.2s;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--color-white);
+  box-shadow: var(--shadow-light);
+  transition: background 0.2s;
 }
 
-.product-card__action-btn:hover {
-  background: var(--color-primary);
-  color: var(--color-white);
-}
+.product-card__action img { width: 16px; height: 16px; }
 
-/* Info */
+.product-card__action:disabled { opacity: 0.45; cursor: not-allowed; }
+
+/* ── Info ─────────────────────────────────── */
 .product-card__info {
-  padding: 16px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 25px 25px 35px;
   text-align: center;
 }
 
 .product-card__name {
-  font-size: 16px;
+  font-size: var(--h5-size);
   font-weight: 700;
+  line-height: var(--h5-line);
+  letter-spacing: var(--h5-spacing);
   color: var(--color-dark);
-  margin-bottom: 6px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .product-card__dept {
-  font-size: 14px;
+  font-size: var(--h6-size);
+  font-weight: 700;
+  line-height: var(--h6-line);
+  letter-spacing: var(--h6-spacing);
   color: var(--color-text);
-  margin-bottom: 10px;
+  white-space: nowrap;
 }
 
 .product-card__prices {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
+  gap: 5px;
+  padding: 5px 3px;
 }
 
-.product-card__old-price {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--color-light-text);
-  text-decoration: line-through;
-}
-
+.product-card__old-price,
 .product-card__price {
-  font-size: 14px;
+  font-size: var(--h5-size);
   font-weight: 700;
-  color: var(--color-primary);
+  line-height: var(--h5-line);
+  letter-spacing: var(--h5-spacing);
 }
+
+.product-card__old-price { color: var(--color-light-text); }
+.product-card__price { color: var(--color-secondary); }

@@ -1,0 +1,58 @@
+/* Shared section heading — Figma "main-content" block: 10px gaps, centred,
+   691px max width. */
+
+.section-heading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  max-width: 691px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.section-heading__tag {
+  font-size: var(--h4-size);
+  font-weight: 400;
+  line-height: var(--h4-line);
+  letter-spacing: var(--h4-spacing);
+  color: var(--color-text);
+}
+
+.section-heading__title {
+  font-size: var(--h3-size);
+  font-weight: 700;
+  line-height: var(--h3-line);
+  letter-spacing: var(--h3-spacing);
+  color: var(--color-dark);
+}
+
+.section-heading__subtitle {
+  font-size: var(--body-size);
+  font-weight: 400;
+  line-height: var(--body-line);
+  letter-spacing: var(--body-spacing);
+  color: var(--color-text);
+}
+
+/* Blog section: small bold primary tag above a large h2 title */
+.section-heading--accent .section-heading__tag {
+  font-size: var(--h6-size);
+  font-weight: 700;
+  line-height: var(--h6-line);
+  letter-spacing: var(--h6-spacing);
+  color: var(--color-primary);
+}
+
+.section-heading--accent .section-heading__title {
+  font-size: var(--h2-size);
+  line-height: var(--h2-line);
+  letter-spacing: var(--h2-spacing);
+}
+
+@media (max-width: 560px) {
+  .section-heading--accent .section-heading__title {
+    font-size: var(--h3-size);
+    line-height: var(--h3-line);
+  }
+}

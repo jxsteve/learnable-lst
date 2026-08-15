@@ -1,147 +1,187 @@
-.footer {
-  background: var(--color-light-gray);
+/* Footer — Figma: desktop-footer-6 (32:2084) / mobile-footer-6 (32:2450)
+   Three bands: #FAFAFA brand (142px), white links (272px), #FAFAFA copyright (74px). */
+
+.footer__container {
+  max-width: calc(var(--container-max) + 40px);
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
+/* ── Brand band ───────────────────────────── */
 .footer__top {
+  background: var(--color-light-gray);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.footer__top-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 30px 0;
-  border-bottom: 1px solid var(--color-border);
-  gap: 16px;
-  flex-wrap: wrap;
+  /* 58px brand box + 40px padding top and bottom = the design's 142px band
+     (border-box, so min-height covers the padding too) */
+  min-height: 138px;
+  padding-top: 40px;
+  padding-bottom: 40px;
 }
 
 .footer__logo {
-  font-size: 24px;
+  font-size: var(--h3-size);
   font-weight: 700;
+  line-height: var(--h3-line);
+  letter-spacing: var(--h3-spacing);
   color: var(--color-dark);
 }
 
 .footer__socials {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 20px;
 }
 
 .footer__social {
-  color: var(--color-primary);
-  display: flex;
-  align-items: center;
+  display: inline-flex;
   transition: opacity 0.2s;
 }
 
-.footer__social:hover { opacity: 0.7; }
+.footer__social:hover { opacity: 0.75; }
 
-/* Nav columns */
-.footer__nav {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 32px;
-  padding: 60px 0;
+.footer__social-icon {
+  width: 24px;
+  height: 24px;
 }
 
-.footer__col-title {
-  font-size: 16px;
+.footer__social-icon--twitter { height: 19.765px; }
+
+/* ── Links band ───────────────────────────── */
+.footer__middle {
+  background: var(--color-white);
+}
+
+.footer__columns {
+  display: flex;
+  align-items: flex-start;
+  gap: 30px;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.footer__column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 150px;
+  flex-shrink: 0;
+}
+
+.footer__column--subscribe { width: 321px; }
+
+.footer__column-title {
+  font-size: var(--h5-size);
   font-weight: 700;
+  line-height: var(--h5-line);
+  letter-spacing: var(--h5-spacing);
   color: var(--color-dark);
-  margin-bottom: 20px;
+  white-space: nowrap;
 }
 
-.footer__col-links {
+.footer__links {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.footer__col-links a {
-  font-size: 14px;
+.footer__link {
+  font-size: var(--h6-size);
+  font-weight: 700;
+  line-height: var(--h6-line);
+  letter-spacing: var(--h6-spacing);
   color: var(--color-text);
-  font-weight: 500;
+  white-space: nowrap;
   transition: color 0.2s;
 }
 
-.footer__col-links a:hover { color: var(--color-primary); }
+.footer__link:hover { color: var(--color-primary); }
 
-/* Newsletter */
-.footer__newsletter-input-row {
+/* ── Subscribe ────────────────────────────── */
+.footer__input-group {
   display: flex;
-  gap: 0;
-  margin-bottom: 12px;
+  height: 58px;
+  width: 100%;
 }
 
-.footer__newsletter-input-row input {
+.footer__input {
   flex: 1;
-  padding: 12px 16px;
-  border: 1px solid var(--color-border);
+  min-width: 0;
+  padding: 0 19px;
+  border: 1px solid #e6e6e6;
   border-right: none;
   border-radius: 5px 0 0 5px;
+  background: #f9f9f9;
   font-family: inherit;
-  font-size: 14px;
-  color: var(--color-dark);
-  background: var(--color-white);
-  outline: none;
-  min-width: 0;
+  font-size: var(--body-size);
+  font-weight: 400;
+  line-height: 28px;
+  letter-spacing: var(--body-spacing);
+  color: var(--color-text);
 }
 
-.footer__newsletter-input-row input::placeholder {
-  color: var(--color-light-text);
-}
+.footer__input::placeholder { color: var(--color-text); }
+.footer__input:focus { outline: none; border-color: var(--color-primary); }
 
-.footer__newsletter-input-row input:focus {
-  border-color: var(--color-primary);
-}
-
-.footer__newsletter-input-row button {
-  padding: 12px 20px;
-  background: var(--color-primary);
-  color: var(--color-white);
-  font-size: 14px;
-  font-weight: 700;
-  border: none;
+.footer__subscribe-btn {
+  width: 117px;
+  flex-shrink: 0;
+  border: 1px solid #e6e6e6;
   border-radius: 0 5px 5px 0;
-  cursor: pointer;
-  white-space: nowrap;
+  background: var(--color-primary);
+  font-size: var(--body-size);
+  font-weight: 400;
+  line-height: 28px;
+  letter-spacing: var(--body-spacing);
+  color: var(--color-white);
   transition: opacity 0.2s;
 }
 
-.footer__newsletter-input-row button:hover { opacity: 0.85; }
+.footer__subscribe-btn:hover { opacity: 0.88; }
 
-.footer__newsletter-hint {
-  font-size: 12px;
+.footer__note {
+  margin-top: 1px;
+  padding-left: 2px;
+  font-size: var(--small-size);
+  font-weight: 400;
+  line-height: 28px;
+  letter-spacing: var(--small-spacing);
   color: var(--color-text);
 }
 
-/* Bottom bar */
+/* ── Copyright band ───────────────────────── */
 .footer__bottom {
-  border-top: 1px solid var(--color-border);
-  padding: 20px 0;
+  background: var(--color-light-gray);
+  padding: 25px 0;
 }
 
-.footer__bottom p {
-  font-size: 14px;
-  color: var(--color-text);
+.footer__copyright {
+  font-size: var(--h6-size);
   font-weight: 700;
+  line-height: var(--h6-line);
+  letter-spacing: var(--h6-spacing);
+  color: var(--color-text);
 }
 
-@media (max-width: 900px) {
-  .footer__nav { grid-template-columns: repeat(3, 1fr); }
+/* ── Responsive ───────────────────────────── */
+@media (max-width: 1100px) {
+  .footer__columns { flex-wrap: wrap; gap: 30px 40px; }
+  .footer__column--subscribe { width: 100%; max-width: 321px; }
 }
 
-@media (max-width: 600px) {
-  .footer__nav { grid-template-columns: repeat(2, 1fr); gap: 24px; }
-
-  .footer__newsletter-input-row {
+@media (max-width: 700px) {
+  .footer__top-inner {
     flex-direction: column;
+    align-items: flex-start;
+    gap: 30px;
   }
 
-  .footer__newsletter-input-row input {
-    border-right: 1px solid var(--color-border);
-    border-radius: 5px;
-    margin-bottom: 8px;
-  }
-
-  .footer__newsletter-input-row button {
-    border-radius: 5px;
-  }
+  .footer__columns { flex-direction: column; gap: 30px; }
+  .footer__column { width: 100%; }
+  .footer__copyright { text-align: center; }
 }

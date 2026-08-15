@@ -1,58 +1,69 @@
+/* Best services — Figma: desktop-features-12 (32:1985) / mobile-features-12 (32:2348)
+   1050px container, 80px gap between heading and cards, three 328px columns. */
+
 .services {
   background: var(--color-white);
-  padding: var(--section-padding);
 }
 
-.services__header {
+.services__container {
+  max-width: calc(var(--container-max) + 40px);
+  margin: 0 auto;
+  /* 16px of extra trailing space carries the section to the design's 632px */
+  padding: 80px 20px 96px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 80px;
+}
+
+.services__row {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  width: 100%;
+}
+
+.services__card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 328px;
+  padding: 35px 40px;
   text-align: center;
-  margin-bottom: 80px;
 }
 
-.services__header .section-tag {
-  color: var(--color-text);
-  font-weight: 400;
-}
-
-.services__grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 60px;
-}
-
-.service-card {
-  text-align: center;
-}
-
-.service-card__icon {
+.services__icon {
   width: 72px;
   height: 72px;
-  margin: 0 auto 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--color-primary);
+  flex-shrink: 0;
 }
 
-.service-card__title {
-  font-size: 20px;
+.services__title {
+  font-size: var(--h3-size);
   font-weight: 700;
+  line-height: var(--h3-line);
+  letter-spacing: var(--h3-spacing);
   color: var(--color-dark);
-  margin-bottom: 10px;
 }
 
-.service-card__desc {
-  font-size: 14px;
+.services__text {
+  max-width: 232px;
+  font-size: var(--body-size);
+  font-weight: 400;
+  line-height: var(--body-line);
+  letter-spacing: var(--body-spacing);
   color: var(--color-text);
-  line-height: 1.7;
-  max-width: 240px;
-  margin: 0 auto;
 }
 
-@media (max-width: 768px) {
-  .services__grid {
-    grid-template-columns: 1fr;
-    gap: 48px;
-    max-width: 360px;
-    margin: 0 auto;
-  }
+/* ── Responsive ───────────────────────────── */
+@media (max-width: 992px) {
+  .services__row { flex-wrap: wrap; }
+  .services__card { width: 300px; }
+}
+
+@media (max-width: 700px) {
+  .services__container { gap: 50px; padding: 80px 36px; }
+  .services__row { flex-direction: column; align-items: center; gap: 30px; }
+  .services__card { width: 100%; max-width: 328px; }
 }

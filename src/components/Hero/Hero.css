@@ -1,22 +1,34 @@
+/* Hero cards — Figma: desktop-shop-cards-22 (32:1831) / mobile-shop-cards-22 (32:2246)
+   Desktop row is 1146px wide: 452 + 15 + 332 + 15 + 332. Rows are 300px, so the
+   tall card spans both (300 + 15 + 300 = 615). */
+
 .hero {
+  /* container sits 4px down inside the section, then 80px of padding */
+  padding: 84px 0 80px;
   background: var(--color-white);
 }
 
-/* ── 4-Panel Grid ──────────────────────── */
-.hero__grid {
+.hero__row {
+  /* 1146px of content + 20px gutters either side */
+  max-width: calc(var(--container-wide) + 40px);
+  margin: 0 auto;
+  padding: 0 20px;
   display: grid;
-  grid-template-columns: 5fr 4fr 4fr;
-  grid-template-rows: 1fr 1fr;
-  height: 646px;
+  grid-template-columns: 452fr 332fr 332fr;
+  grid-template-rows: 300px 300px;
+  gap: 15px;
 }
 
-.hero__panel {
+.hero__card {
   position: relative;
   overflow: hidden;
-  cursor: pointer;
+  background: var(--color-white);
 }
 
-.hero__panel img {
+.hero__card--tall  { grid-row: span 2; }
+.hero__card--wide  { grid-column: 2 / span 2; }
+
+.hero__card-image {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -25,118 +37,83 @@
   transition: transform 0.5s ease;
 }
 
-.hero__panel:hover img {
-  transform: scale(1.04);
-}
+.hero__card:hover .hero__card-image { transform: scale(1.04); }
 
-/* Left: spans both rows */
-.hero__panel--left {
-  grid-row: span 2;
-  background: #fce4ec;
-}
-
-/* Top-right: spans 2 columns */
-.hero__panel--top-right {
-  grid-column: span 2;
-  background: #fce4ec;
-}
-
-/* Two bottom panels */
-.hero__panel--bottom-left {
-  background: #e8f5f5;
-}
-
-.hero__panel--bottom-right {
-  background: #f5f5f5;
-}
-
-/* ── Panel Content ──────────────────────── */
-.hero__panel-content {
+/* ── Card content (top-aligned in the design) ── */
+.hero__card-content {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  padding: 32px;
+  gap: 5px;
+  padding: 24px;
   z-index: 1;
 }
 
-.hero__panel--top-right .hero__panel-content,
-.hero__panel--bottom-left .hero__panel-content,
-.hero__panel--bottom-right .hero__panel-content {
-  padding: 24px;
+.hero__card-items {
+  font-size: var(--h6-size);
+  font-weight: 700;
+  line-height: var(--h6-line);
+  letter-spacing: var(--h6-spacing);
+  color: var(--color-success);
 }
 
-.hero__panel-items {
-  font-size: 12px;
+.hero__card-title {
+  font-size: var(--h3-size);
   font-weight: 700;
-  color: var(--color-secondary);
-  letter-spacing: 0.02em;
-  margin-bottom: 8px;
-}
-
-.hero__panel-title {
-  font-size: 40px;
-  font-weight: 700;
+  line-height: var(--h3-line);
+  letter-spacing: var(--h3-spacing);
   color: var(--color-dark);
-  line-height: 1.1;
-  margin-bottom: 16px;
 }
 
-.hero__panel--top-right .hero__panel-title,
-.hero__panel--bottom-left .hero__panel-title,
-.hero__panel--bottom-right .hero__panel-title {
-  font-size: 24px;
-  margin-bottom: 10px;
+/* The tall card uses the larger h2 style */
+.hero__card--tall .hero__card-title {
+  font-size: var(--h2-size);
+  line-height: var(--h2-line);
+  letter-spacing: var(--h2-spacing);
 }
 
-.hero__panel-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
+.hero__card-link {
+  font-size: var(--h6-size);
   font-weight: 700;
+  line-height: var(--h6-line);
+  letter-spacing: var(--h6-spacing);
   color: var(--color-dark);
-  border-bottom: 2px solid var(--color-dark);
-  padding-bottom: 2px;
   width: fit-content;
-  transition: color 0.2s, border-color 0.2s;
+  transition: color 0.2s;
 }
 
-.hero__panel-link:hover {
-  color: var(--color-primary);
-  border-color: var(--color-primary);
-}
+.hero__card-link:hover { color: var(--color-primary); }
 
-/* ── Responsive ──────────────────────── */
-@media (max-width: 1024px) {
-  .hero__grid { height: 500px; }
-  .hero__panel-title { font-size: 32px; }
-  .hero__panel--top-right .hero__panel-title,
-  .hero__panel--bottom-left .hero__panel-title,
-  .hero__panel--bottom-right .hero__panel-title { font-size: 20px; }
-}
-
-@media (max-width: 768px) {
-  .hero__grid {
+/* ── Responsive ───────────────────────────── */
+@media (max-width: 992px) {
+  .hero__row {
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 320px 220px 220px;
-    height: auto;
+    grid-template-rows: 300px 300px 300px;
   }
-  .hero__panel--left { grid-row: 1; grid-column: span 2; }
-  .hero__panel--top-right { grid-column: span 2; grid-row: 2; }
-  .hero__panel--bottom-left { grid-row: 3; }
-  .hero__panel--bottom-right { grid-row: 3; }
-  .hero__panel-title { font-size: 28px; }
+  .hero__card--tall { grid-column: span 2; grid-row: span 1; }
+  .hero__card--wide { grid-column: span 2; }
+  .hero__card--tall .hero__card-title {
+    font-size: var(--h3-size);
+    line-height: var(--h3-line);
+    letter-spacing: var(--h3-spacing);
+  }
 }
 
-@media (max-width: 480px) {
-  .hero__grid {
+/* Figma mobile: 333px container (41px gutters), four stacked 332x300 cards */
+@media (max-width: 768px) {
+  .hero { padding: 24px 0; }
+
+  .hero__row {
     grid-template-columns: 1fr;
-    grid-template-rows: 280px 220px 220px 220px;
+    grid-template-rows: repeat(4, 300px);
+    gap: 15px;
+    /* 41px gutters at the design's 414px width, tightening on smaller phones */
+    padding: 0 clamp(20px, 10%, 41px);
   }
-  .hero__panel--left { grid-column: 1; }
-  .hero__panel--top-right { grid-column: 1; }
-  .hero__panel--bottom-left { grid-row: 3; }
-  .hero__panel--bottom-right { grid-row: 4; }
+
+  .hero__card--tall,
+  .hero__card--wide { grid-column: span 1; }
 }
