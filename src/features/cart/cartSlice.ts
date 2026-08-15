@@ -3,6 +3,7 @@ import type { CartState, Product } from '../../types';
 
 const initialState: CartState = {
   items: [],
+  lastAdded: null,
 };
 
 const cartSlice = createSlice({
@@ -16,6 +17,10 @@ const cartSlice = createSlice({
       } else {
         state.items.push({ product: action.payload, quantity: 1 });
       }
+      state.lastAdded = action.payload;
+    },
+    dismissAddedNotification(state) {
+      state.lastAdded = null;
     },
     removeFromCart(state, action: PayloadAction<number>) {
       state.items = state.items.filter((i) => i.product.id !== action.payload);
@@ -38,7 +43,13 @@ const cartSlice = createSlice({
   },
 });
 
-export const { addToCart, removeFromCart, incrementQuantity, decrementQuantity, clearCart } =
-  cartSlice.actions;
+export const {
+  addToCart,
+  removeFromCart,
+  incrementQuantity,
+  decrementQuantity,
+  clearCart,
+  dismissAddedNotification,
+} = cartSlice.actions;
 
 export default cartSlice.reducer;

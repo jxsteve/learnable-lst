@@ -1,0 +1,91 @@
+/* Add-to-basket notification — Figma node 35:2723.
+   502x152 card, 16px padding, 24px between header and body. */
+
+.basket-toast {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  width: min(502px, calc(100vw - 32px));
+  padding: 16px;
+  border-radius: 4px;
+  background: var(--color-white);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+  font-family: var(--font-family-card);
+  animation: basket-toast-in 0.2s ease-out;
+}
+
+@keyframes basket-toast-in {
+  from { opacity: 0; transform: translate(-50%, calc(-50% + 8px)); }
+  to   { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .basket-toast { animation: none; }
+}
+
+.basket-toast__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.basket-toast__heading {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--card-black);
+}
+
+.basket-toast__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  transition: background 0.2s;
+}
+
+.basket-toast__close:hover { background: var(--color-light-gray); }
+.basket-toast__close img { width: 16px; height: 16px; }
+
+.basket-toast__body {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.basket-toast__thumb {
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+  object-fit: contain;
+  background: var(--color-light-gray);
+}
+
+.basket-toast__details {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+.basket-toast__title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--card-black);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.basket-toast__price {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  color: var(--card-black);
+}

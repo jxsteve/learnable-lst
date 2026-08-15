@@ -1,115 +1,226 @@
-/* Product card — Figma: "Product card" (32:1884). 183px wide, 238px image,
-   info block padded 25/25/35 with 10px gaps. */
+/* Product card — Figma node 35:2598 ("Variant 3" / hover / out of stock).
+   Design card is 300x442 at rest and 300x482 on hover, where a divider and
+   "Add to basket" appear. The footer space is reserved at all times so the
+   grid never reflows on hover. */
 
-.product-card {
+.pcard {
+  position: relative;
   display: flex;
   flex-direction: column;
+  padding: 16px;
+  border-radius: 4px;
   background: var(--color-white);
+  font-family: var(--font-family-card);
+  transition: box-shadow 0.25s ease;
 }
 
-.product-card__media {
+.pcard:hover,
+.pcard:focus-within { box-shadow: var(--card-shadow); }
+
+/* ── Media ────────────────────────────────── */
+.pcard__media {
   position: relative;
-  height: 238px;
+  aspect-ratio: 1;
   overflow: hidden;
 }
 
-.product-card__image {
+.pcard__image {
   width: 100%;
   height: 100%;
-  /* API thumbnails are square product shots, so contain rather than crop them */
   object-fit: contain;
-  background: var(--color-light-gray);
-  padding: 10px;
-  transition: transform 0.4s ease;
 }
 
-.product-card:hover .product-card__image { transform: scale(1.05); }
-
-/* ── Hover actions (additive — the design shows a bare card) ── */
-.product-card__actions {
+.pcard__image--hover {
   position: absolute;
-  right: 10px;
-  bottom: 10px;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.pcard:hover .pcard__image--hover,
+.pcard:focus-within .pcard__image--hover { opacity: 1; }
+
+.pcard--out-of-stock .pcard__image { opacity: 0.6; }
+
+/* ── Badges ───────────────────────────────── */
+.pcard__badge {
+  position: absolute;
+  left: 8px;
+  bottom: 8px;
+  padding: 2px 11px;
+  background: var(--color-white);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+  color: var(--card-error);
+}
+
+.pcard__stock-flag {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 4px 8px;
+  background: var(--card-black);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 20px;
+  color: var(--color-white);
+  white-space: nowrap;
+}
+
+/* ── Hover actions ────────────────────────── */
+.pcard__actions {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
   display: flex;
+  flex-direction: column;
   gap: 8px;
   opacity: 0;
-  transform: translateY(6px);
-  transition: opacity 0.25s ease, transform 0.25s ease;
+  transition: opacity 0.25s ease;
 }
 
-.product-card:hover .product-card__actions,
-.product-card:focus-within .product-card__actions {
-  opacity: 1;
-  transform: translateY(0);
-}
+.pcard:hover .pcard__actions,
+.pcard:focus-within .pcard__actions { opacity: 1; }
 
-.product-card__action {
+.pcard__action {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background: var(--color-white);
-  box-shadow: var(--shadow-light);
-  transition: background 0.2s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  transition: transform 0.15s ease;
 }
 
-.product-card__action img { width: 16px; height: 16px; }
+.pcard__action:hover { transform: scale(1.06); }
+.pcard__action img { width: 24px; height: 24px; }
 
-.product-card__action:disabled { opacity: 0.45; cursor: not-allowed; }
-
-/* ── Info ─────────────────────────────────── */
-.product-card__info {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  padding: 25px 25px 35px;
-  text-align: center;
+/* ── Text ─────────────────────────────────── */
+.pcard__brand {
+  margin-top: 16px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  color: var(--card-black-70);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: capitalize;
 }
 
-.product-card__name {
-  font-size: var(--h5-size);
-  font-weight: 700;
-  line-height: var(--h5-line);
-  letter-spacing: var(--h5-spacing);
-  color: var(--color-dark);
-  /* Live titles vary in length — clamp so every card in the row stays level */
+.pcard__title {
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--card-black);
+  /* the design reserves two lines for the title */
+  min-height: calc(14px * 1.2 * 2);
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   line-clamp: 2;
   overflow: hidden;
-  min-height: calc(var(--h5-line) * 2);
 }
 
-.product-card__dept {
-  font-size: var(--h6-size);
-  font-weight: 700;
-  line-height: var(--h6-line);
-  letter-spacing: var(--h6-spacing);
-  color: var(--color-text);
-  text-transform: capitalize;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
-}
-
-.product-card__prices {
+.pcard__prices {
   display: flex;
-  gap: 5px;
-  padding: 5px 3px;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
 }
 
-.product-card__old-price,
-.product-card__price {
-  font-size: var(--h5-size);
-  font-weight: 700;
-  line-height: var(--h5-line);
-  letter-spacing: var(--h5-spacing);
+.pcard__old-price {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--card-black-70);
+  text-decoration: line-through;
 }
 
-.product-card__old-price { color: var(--color-light-text); }
-.product-card__price { color: var(--color-secondary); }
+.pcard__price {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  color: var(--card-black);
+}
+
+/* ── Rating ───────────────────────────────── */
+.pcard__rating {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.pcard__stars {
+  display: inline-flex;
+  gap: 2px;
+}
+
+.pcard__stars img { width: 16px; height: 16px; }
+
+.pcard__rating-text {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  color: var(--card-black-70);
+}
+
+.pcard__rating-value { font-weight: 500; }
+
+/* ── Footer ───────────────────────────────── */
+.pcard__footer {
+  display: flex;
+  justify-content: center;
+  margin: 16px -16px 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--card-black-20);
+  /* revealed on hover, but the space is always held */
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.pcard:hover .pcard__footer,
+.pcard:focus-within .pcard__footer { opacity: 1; }
+
+.pcard__basket {
+  padding: 8px 16px;
+  border: 1px solid var(--card-black-20);
+  border-radius: 100px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  text-transform: uppercase;
+  color: var(--card-black);
+  background: transparent;
+  transition: background 0.2s, color 0.2s;
+}
+
+.pcard__basket:hover:not(:disabled) {
+  background: var(--card-black);
+  color: var(--color-white);
+}
+
+.pcard__basket:disabled {
+  color: var(--card-black-70);
+  cursor: not-allowed;
+}
+
+/* Touch devices get no hover, so keep the controls permanently available */
+@media (hover: none) {
+  .pcard__footer,
+  .pcard__actions { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pcard,
+  .pcard__image--hover,
+  .pcard__actions,
+  .pcard__footer,
+  .pcard__action { transition: none; }
+}

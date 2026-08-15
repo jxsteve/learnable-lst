@@ -59,4 +59,6 @@ export interface CartItem {
 
 export interface CartState {
   items: CartItem[];
+  /** Drives the "Successfully added to basket" notification; null when dismissed. */
+  lastAdded: Product | null;
 }

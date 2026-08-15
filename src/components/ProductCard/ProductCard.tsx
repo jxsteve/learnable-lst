@@ -1,49 +1,86 @@
 import type { Product } from '../../types';
 import { useAppDispatch } from '../../app/hooks';
 import { addToCart } from '../../features/cart/cartSlice';
-import cartIcon from '../../assets/icons/cart.svg';
-import heartIcon from '../../assets/icons/heart.svg';
+import { formatPrice } from '../../utils/format';
+import starFilled from '../../assets/icons/pc-star-filled.svg';
+import starEmpty from '../../assets/icons/pc-star-empty.svg';
+import compareIcon from '../../assets/icons/pc-compare.svg';
+import heartIcon from '../../assets/icons/pc-heart.svg';
 import './ProductCard.css';
 
 interface Props {
   product: Product;
 }
 
+const MAX_STARS = 5;
+
 export default function ProductCard({ product }: Props) {
   const dispatch = useAppDispatch();
 
-  // dummyjson lists `price` before the available discount is applied.
+  const discount = Math.round(product.discountPercentage);
+  const hasDiscount = discount >= 1;
   const salePrice = product.price * (1 - product.discountPercentage / 100);
-  // Roughly half the catalogue has no brand, so fall back to the category.
-  const subtitle = product.brand ?? product.category;
+  const outOfStock = product.stock === 0 || product.availabilityStatus === 'Out of Stock';
+
+  // Roughly half of dummyjson's catalogue has no brand, so fall back to category.
+  const brand = product.brand ?? product.category;
+  // The design swaps to a second shot on hover; not every product has one.
+  const hoverImage = product.images?.[1];
+  const filledStars = Math.round(product.rating);
 
   return (
-    <article className="product-card">
-      <div className="product-card__media">
-        <img src={product.thumbnail} alt={product.title} className="product-card__image" loading="lazy" />
+    <article className={`pcard ${outOfStock ? 'pcard--out-of-stock' : ''}`}>
+      <div className="pcard__media">
+        <img src={product.thumbnail} alt={product.title} className="pcard__image" loading="lazy" />
+        {hoverImage && (
+          <img src={hoverImage} alt="" className="pcard__image pcard__image--hover" loading="lazy" />
+        )}
 
-        {/* Not present in the static design — revealed on hover only */}
-        <div className="product-card__actions">
-          <button
-            className="product-card__action"
-            aria-label={`Add ${product.title} to cart`}
-            onClick={() => dispatch(addToCart(product))}
-          >
-            <img src={cartIcon} alt="" />
+        {hasDiscount && <span className="pcard__badge">-{discount}%</span>}
+        {outOfStock && <span className="pcard__stock-flag">Out of stock</span>}
+
+        <div className="pcard__actions">
+          <button className="pcard__action" aria-label={`Compare ${product.title}`}>
+            <img src={compareIcon} alt="" />
           </button>
-          <button className="product-card__action" aria-label={`Add ${product.title} to wishlist`}>
+          <button className="pcard__action" aria-label={`Add ${product.title} to wishlist`}>
             <img src={heartIcon} alt="" />
           </button>
         </div>
       </div>
 
-      <div className="product-card__info">
-        <h3 className="product-card__name" title={product.title}>{product.title}</h3>
-        <p className="product-card__dept">{subtitle}</p>
-        <div className="product-card__prices">
-          <span className="product-card__old-price">${product.price.toFixed(2)}</span>
-          <span className="product-card__price">${salePrice.toFixed(2)}</span>
-        </div>
+      <p className="pcard__brand">{brand}</p>
+      <h3 className="pcard__title" title={product.title}>{product.title}</h3>
+
+      <div className="pcard__prices">
+        {hasDiscount && (
+          <span className="pcard__old-price">{formatPrice(product.price)}</span>
+        )}
+        <span className="pcard__price">
+          {formatPrice(hasDiscount ? salePrice : product.price)}
+        </span>
+      </div>
+
+      <div className="pcard__rating">
+        <span className="pcard__stars" aria-hidden>
+          {Array.from({ length: MAX_STARS }, (_, index) => (
+            <img key={index} src={index < filledStars ? starFilled : starEmpty} alt="" />
+          ))}
+        </span>
+        <span className="pcard__rating-text">
+          <span className="pcard__rating-value">{product.rating.toFixed(1)}</span>
+          {` (${product.reviews?.length ?? 0})`}
+        </span>
+      </div>
+
+      <div className="pcard__footer">
+        <button
+          className="pcard__basket"
+          disabled={outOfStock}
+          onClick={() => dispatch(addToCart(product))}
+        >
+          Add to basket
+        </button>
       </div>
     </article>
   );

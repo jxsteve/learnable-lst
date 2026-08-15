@@ -18,14 +18,13 @@
 }
 
 /* ── Grid ─────────────────────────────────── */
+/* The product card design (Figma 35:2598) is 300px wide, so the grid follows it
+   rather than the landing page's original five 183px columns. */
 .bestseller__grid {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 183px));
-  column-gap: 30px;
-  row-gap: 15px;
-  justify-content: center;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
   width: 100%;
-  /* tab-content py-8 + tab-one p-24 in the design */
   padding: 32px 0;
 }
 
@@ -83,27 +82,13 @@
 }
 
 /* ── Responsive ───────────────────────────── */
-@media (max-width: 1100px) {
-  .bestseller__grid { grid-template-columns: repeat(4, minmax(0, 183px)); }
-}
-
-@media (max-width: 900px) {
-  .bestseller__grid { grid-template-columns: repeat(3, minmax(0, 183px)); }
-}
-
-@media (max-width: 700px) {
-  .bestseller__grid { grid-template-columns: repeat(2, minmax(0, 183px)); }
-}
-
-/* Figma mobile: one 295px column, 360px imagery, 30px gaps */
+/* auto-fill handles desktop and tablet; below 560px force a single column so
+   cards keep the design's proportions rather than squeezing to ~250px. */
 @media (max-width: 560px) {
   .bestseller__container { padding: 0 36px; }
 
   .bestseller__grid {
-    grid-template-columns: minmax(0, 295px);
-    row-gap: 30px;
-    padding: 32px 0;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 30px;
   }
-
-  .product-card__media { height: 360px; }
 }

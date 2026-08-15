@@ -23,6 +23,16 @@
 
   --font-family: 'Montserrat', sans-serif;
 
+  /* ── Product card design system (Figma node 35:2598) ──
+     A separate kit from the landing page: Rubik, its own greys. */
+  --font-family-card: 'Rubik', sans-serif;
+  --card-black: #1B1B1B;        /* default-black */
+  --card-black-70: #606060;     /* default-black-70 */
+  --card-black-20: #D1D1D1;     /* default-black-20 */
+  --card-accent: #200F1E;       /* primary-accent */
+  --card-error: #DA0000;        /* error-content */
+  --card-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+
   /* ── Type scale (Figma text styles: size / line-height / letter-spacing) ── */
   --h1-size: 58px;   --h1-line: 80px;  --h1-spacing: 0.2px;
   --h2-size: 40px;   --h2-line: 50px;  --h2-spacing: 0.2px;
