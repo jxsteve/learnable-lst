@@ -3,7 +3,7 @@ import ProductCard from '../ProductCard/ProductCard';
 import './BestsellerProducts.css';
 
 export default function BestsellerProducts() {
-  const { data, isLoading, isError } = useGetProductsQuery({ limit: 8 });
+  const { data, isLoading, isError } = useGetProductsQuery({ limit: 10 });
 
   return (
     <section className="bestseller" id="bestseller">
@@ -11,8 +11,8 @@ export default function BestsellerProducts() {
         <div className="bestseller__header">
           <p className="section-tag">Featured Products</p>
           <h2 className="section-title">BESTSELLER PRODUCTS</h2>
-          <p className="section-subtitle" style={{ margin: '0 auto' }}>
-            Problems trying to resolve the conflict between the two major realms of Classic Physics.
+          <p className="section-subtitle">
+            Problems trying to resolve the conflict between
           </p>
         </div>
 
@@ -24,7 +24,7 @@ export default function BestsellerProducts() {
 
         {isLoading ? (
           <div className="bestseller__grid">
-            {Array.from({ length: 8 }).map((_, i) => (
+            {Array.from({ length: 10 }).map((_, i) => (
               <div key={i} className="bestseller__skeleton" />
             ))}
           </div>
@@ -36,7 +36,7 @@ export default function BestsellerProducts() {
           </div>
         )}
 
-        <div className="bestseller__load-more">
+        <div className="bestseller__footer">
           <button className="btn-outline">LOAD MORE PRODUCTS</button>
         </div>
       </div>

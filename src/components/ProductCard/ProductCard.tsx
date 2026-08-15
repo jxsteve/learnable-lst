@@ -13,7 +13,7 @@ export default function ProductCard({ product }: Props) {
 
   return (
     <div className="product-card">
-      <div className="product-card__image-wrap">
+      <div className="product-card__img-wrap">
         <img src={product.thumbnail} alt={product.title} loading="lazy" />
         <div className="product-card__actions">
           <button
@@ -39,12 +39,11 @@ export default function ProductCard({ product }: Props) {
       </div>
 
       <div className="product-card__info">
-        <p className="product-card__category">{product.category}</p>
-        <h3 className="product-card__name">{product.title}</h3>
-        <p className="product-card__desc">{product.description}</p>
+        <h3 className="product-card__name">Graphic Design</h3>
+        <p className="product-card__dept">English Department</p>
         <div className="product-card__prices">
-          <span className="product-card__price">${product.price.toFixed(2)}</span>
           <span className="product-card__old-price">${originalPrice}</span>
+          <span className="product-card__price">${product.price.toFixed(2)}</span>
         </div>
       </div>
     </div>

@@ -1,13 +1,14 @@
+/* ── Top Bar ─────────────────────────────── */
 .topbar {
   background: var(--color-dark);
-  padding: 8px 0;
+  padding: 12px 0;
 }
 
 .topbar__inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: 12px;
 }
 
 .topbar__contacts {
@@ -20,72 +21,68 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 12px;
-  color: var(--color-white);
-  font-weight: 600;
-}
-
-.topbar__contact svg {
-  flex-shrink: 0;
-}
-
-.topbar__actions {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.topbar__link {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--color-white);
-  transition: color 0.2s;
 }
 
-.topbar__link:hover {
-  color: var(--color-primary);
+.topbar__promo {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-white);
+  text-align: center;
+  flex: 1;
+}
+
+.topbar__right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.topbar__follow-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-white);
 }
 
 .topbar__socials {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 
 .topbar__social {
   color: var(--color-white);
+  display: flex;
+  align-items: center;
   transition: color 0.2s;
 }
 
-.topbar__social:hover {
-  color: var(--color-primary);
-}
+.topbar__social:hover { color: var(--color-primary); }
 
-/* Main Navbar */
+/* ── Main Navbar ─────────────────────────── */
 .navbar {
   background: var(--color-white);
   border-bottom: 1px solid var(--color-border);
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
 
 .navbar__inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 18px 0;
+  padding: 25px 0;
+  gap: 20px;
 }
 
 .navbar__logo {
   font-size: 24px;
   font-weight: 700;
   color: var(--color-dark);
-  letter-spacing: 0.02em;
+  flex-shrink: 0;
 }
 
 .navbar__nav {
@@ -99,15 +96,37 @@
   font-weight: 600;
   color: var(--color-dark);
   transition: color 0.2s;
-  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .navbar__nav a:hover,
-.navbar__nav a.active {
-  color: var(--color-primary);
+.navbar__nav a.active { color: var(--color-primary); }
+
+.navbar__nav .has-dropdown {
+  position: relative;
 }
 
 .navbar__icons {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.navbar__login {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-primary);
+  transition: opacity 0.2s;
+}
+
+.navbar__login:hover { opacity: 0.8; }
+
+.navbar__icon-group {
   display: flex;
   align-items: center;
   gap: 16px;
@@ -121,15 +140,13 @@
   align-items: center;
 }
 
-.navbar__icon-btn:hover {
-  color: var(--color-primary);
-}
+.navbar__icon-btn:hover { color: var(--color-primary); }
 
-.navbar__cart-badge {
+.navbar__badge {
   position: absolute;
-  top: -6px;
-  right: -8px;
-  background: var(--color-danger);
+  top: -7px;
+  right: -9px;
+  background: var(--color-primary);
   color: white;
   font-size: 10px;
   font-weight: 700;
@@ -146,9 +163,9 @@
   flex-direction: column;
   gap: 5px;
   padding: 4px;
-  cursor: pointer;
   background: none;
   border: none;
+  cursor: pointer;
 }
 
 .navbar__hamburger span {
@@ -157,19 +174,15 @@
   height: 2px;
   background: var(--color-dark);
   border-radius: 2px;
-  transition: all 0.3s;
 }
 
-/* Mobile */
+/* ── Responsive ──────────────────────────── */
+@media (max-width: 900px) {
+  .topbar__contacts { display: none; }
+  .topbar__promo { text-align: right; }
+}
+
 @media (max-width: 768px) {
-  .topbar__contacts {
-    display: none;
-  }
-
-  .topbar__socials {
-    display: none;
-  }
-
   .navbar__nav {
     display: none;
     position: absolute;
@@ -177,6 +190,7 @@
     left: 0;
     right: 0;
     flex-direction: column;
+    align-items: flex-start;
     background: var(--color-white);
     border-top: 1px solid var(--color-border);
     padding: 20px;
@@ -184,21 +198,9 @@
     box-shadow: 0 4px 12px rgba(0,0,0,0.08);
   }
 
-  .navbar__nav.open {
-    display: flex;
-  }
-
-  .navbar__hamburger {
-    display: flex;
-  }
-
-  .navbar {
-    position: relative;
-  }
-}
-
-@media (max-width: 480px) {
-  .topbar__link {
-    display: none;
-  }
+  .navbar__nav.open { display: flex; }
+  .navbar__hamburger { display: flex; }
+  .navbar { position: relative; }
+  .navbar__login span { display: none; }
+  .topbar__promo { display: none; }
 }

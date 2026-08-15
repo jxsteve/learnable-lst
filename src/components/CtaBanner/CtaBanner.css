@@ -1,70 +1,71 @@
 .cta-banner {
   position: relative;
-  padding: 80px 20px;
   overflow: hidden;
-  text-align: center;
+  background: #f5f5f5;
+  min-height: 500px;
+  display: flex;
+  align-items: center;
 }
 
 .cta-banner__bg {
   position: absolute;
-  inset: 0;
-  width: 100%;
+  right: 0;
+  top: 0;
   height: 100%;
+  width: 55%;
   object-fit: cover;
-  z-index: 0;
-}
-
-.cta-banner__overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(35, 50, 66, 0.75);
-  z-index: 1;
+  object-position: left center;
 }
 
 .cta-banner__content {
   position: relative;
-  z-index: 2;
-  max-width: 600px;
-  margin: 0 auto;
+  z-index: 1;
+  max-width: 480px;
+  padding: 60px 0;
 }
 
 .cta-banner__tag {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 700;
-  letter-spacing: 0.1em;
-  color: var(--color-secondary);
-  text-transform: uppercase;
+  color: var(--color-primary);
   margin-bottom: 16px;
 }
 
 .cta-banner__title {
   font-size: 40px;
   font-weight: 700;
-  color: var(--color-white);
+  color: var(--color-dark);
   line-height: 1.2;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 .cta-banner__desc {
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.75);
+  color: var(--color-text);
   line-height: 1.8;
-  margin-bottom: 32px;
+  margin-bottom: 28px;
+  max-width: 380px;
 }
 
 .cta-banner__price {
-  font-size: 24px;
+  font-size: 28px;
   font-weight: 700;
   color: var(--color-secondary);
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 
-@media (max-width: 768px) {
-  .cta-banner__title {
-    font-size: 28px;
+@media (max-width: 900px) {
+  .cta-banner__bg {
+    width: 45%;
+    opacity: 0.3;
   }
 
-  .cta-banner {
-    padding: 60px 20px;
-  }
+  .cta-banner__title { font-size: 28px; }
+}
+
+@media (max-width: 600px) {
+  .cta-banner__bg { display: none; }
+  .cta-banner__title { font-size: 24px; }
+  .cta-banner { padding: 0 0; }
+  .cta-banner__content { max-width: 100%; }
 }

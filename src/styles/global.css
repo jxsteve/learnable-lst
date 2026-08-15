@@ -6,27 +6,24 @@
 
 :root {
   --color-primary: #23A6F0;
-  --color-secondary: #23D2B5;
+  --color-secondary: #23856D;
   --color-dark: #252B42;
   --color-text: #737373;
   --color-light-text: #BDBDBD;
   --color-white: #FFFFFF;
   --color-light-gray: #FAFAFA;
   --color-border: #E8E8E8;
-  --color-success: #2DC071;
-  --color-warning: #E77C40;
   --color-danger: #E74040;
-  --color-sale: #23A6F0;
+  --color-warning: #F3CD03;
 
   --font-family: 'Montserrat', sans-serif;
-  --font-size-base: 14px;
 
   --container-max: 1050px;
   --section-padding: 80px 0;
 }
 
 html {
-  font-size: var(--font-size-base);
+  font-size: 14px;
   scroll-behavior: smooth;
 }
 
@@ -42,21 +39,9 @@ a {
   color: inherit;
 }
 
-ul {
-  list-style: none;
-}
-
-img {
-  max-width: 100%;
-  display: block;
-}
-
-button {
-  cursor: pointer;
-  border: none;
-  background: none;
-  font-family: inherit;
-}
+ul { list-style: none; }
+img { max-width: 100%; display: block; }
+button { cursor: pointer; border: none; background: none; font-family: inherit; }
 
 .container {
   max-width: var(--container-max);
@@ -65,11 +50,10 @@ button {
 }
 
 .section-tag {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.02em;
   color: var(--color-primary);
-  text-transform: uppercase;
   margin-bottom: 10px;
 }
 
@@ -83,7 +67,6 @@ button {
 .section-subtitle {
   font-size: 14px;
   color: var(--color-text);
-  max-width: 460px;
   line-height: 1.7;
 }
 
@@ -91,29 +74,29 @@ button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 10px 30px;
+  padding: 15px 40px;
   background: var(--color-primary);
   color: var(--color-white);
   font-size: 14px;
   font-weight: 700;
-  border-radius: 37px;
+  letter-spacing: 0.02em;
+  border-radius: 5px;
   transition: opacity 0.2s;
 }
 
-.btn-primary:hover {
-  opacity: 0.85;
-}
+.btn-primary:hover { opacity: 0.85; }
 
 .btn-outline {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 10px 30px;
-  border: 2px solid var(--color-primary);
+  padding: 15px 40px;
+  border: 1px solid var(--color-primary);
   color: var(--color-primary);
   font-size: 14px;
   font-weight: 700;
-  border-radius: 37px;
+  letter-spacing: 0.02em;
+  border-radius: 5px;
   background: transparent;
   transition: all 0.2s;
 }
