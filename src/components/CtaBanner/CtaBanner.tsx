@@ -3,7 +3,7 @@ import './CtaBanner.css';
 
 export default function CtaBanner() {
   return (
-    <section className="cta">
+    <section className="cta" id="pages">
       <img src={ctaBackground} alt="" className="cta__background" />
 
       <div className="cta__container">

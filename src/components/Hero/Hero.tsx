@@ -19,7 +19,7 @@ const CARDS: Card[] = [
 
 export default function Hero() {
   return (
-    <section className="hero">
+    <section className="hero" id="home">
       <div className="hero__row">
         {CARDS.map((card) => (
           <article key={card.alt} className={`hero__card ${card.modifier}`}>

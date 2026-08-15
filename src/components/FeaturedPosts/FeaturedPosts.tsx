@@ -15,7 +15,7 @@ const POSTS = [
 
 export default function FeaturedPosts() {
   return (
-    <section className="posts">
+    <section className="posts" id="blog">
       <div className="posts__container">
         <SectionHeading tag="Practice Advice" title="Featured Posts" variant="accent" />
 

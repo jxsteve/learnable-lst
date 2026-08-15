@@ -21,13 +21,14 @@ const SOCIALS = [
   { href: '#', label: 'Twitter', icon: twitterIcon },
 ];
 
+/** Each link targets a section id on the landing page. */
 const NAV_LINKS = [
-  { href: '/', label: 'Home' },
-  { href: '#', label: 'Shop', dropdown: true },
-  { href: '#', label: 'About' },
-  { href: '#', label: 'Blog' },
-  { href: '#', label: 'Contact' },
-  { href: '#', label: 'Pages' },
+  { href: '#home', label: 'Home' },
+  { href: '#bestseller', label: 'Shop', dropdown: true },
+  { href: '#services', label: 'About' },
+  { href: '#blog', label: 'Blog' },
+  { href: '#contact', label: 'Contact' },
+  { href: '#pages', label: 'Pages' },
 ];
 
 export default function Navbar() {
@@ -68,7 +69,7 @@ export default function Navbar() {
       {/* ── Main navbar ── */}
       <nav className="navbar">
         <div className="navbar__inner">
-          <a href="/" className="navbar__logo">Bandage</a>
+          <a href="#home" className="navbar__logo" onClick={() => setMenuOpen(false)}>Bandage</a>
 
           <ul className={`navbar__nav ${menuOpen ? 'navbar__nav--open' : ''}`}>
             {NAV_LINKS.map((link) => (
@@ -76,6 +77,7 @@ export default function Navbar() {
                 <a
                   href={link.href}
                   className={link.dropdown ? 'navbar__link navbar__link--dropdown' : 'navbar__link'}
+                  onClick={() => setMenuOpen(false)}
                 >
                   {link.label}
                   {link.dropdown && <img src={chevronIcon} alt="" className="navbar__chevron" />}

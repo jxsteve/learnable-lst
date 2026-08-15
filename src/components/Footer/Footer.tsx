@@ -18,11 +18,11 @@ const LINK_COLUMNS = [
 
 export default function Footer() {
   return (
-    <footer className="footer">
+    <footer className="footer" id="contact">
       {/* ── Brand band ── */}
       <div className="footer__top">
         <div className="footer__container footer__top-inner">
-          <a href="/" className="footer__logo">Bandage</a>
+          <a href="#home" className="footer__logo">Bandage</a>
           <div className="footer__socials">
             {SOCIALS.map((social) => (
               <a key={social.label} href="#" className="footer__social" aria-label={social.label}>

@@ -22,7 +22,7 @@ const RATING = 4;
 
 export default function Testimonials() {
   return (
-    <section className="testimonials">
+    <section className="testimonials" id="testimonials">
       <div className="testimonials__container">
         <div className="testimonials__row">
           {/* ── Quote ── */}

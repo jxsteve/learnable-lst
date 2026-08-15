@@ -16,7 +16,7 @@ const SERVICES = [
 
 export default function BestServices() {
   return (
-    <section className="services">
+    <section className="services" id="services">
       <div className="services__container">
         <SectionHeading
           tag="Featured Products"
