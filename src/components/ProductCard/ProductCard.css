@@ -16,7 +16,10 @@
 .product-card__image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  /* API thumbnails are square product shots, so contain rather than crop them */
+  object-fit: contain;
+  background: var(--color-light-gray);
+  padding: 10px;
   transition: transform 0.4s ease;
 }
 
@@ -72,6 +75,13 @@
   line-height: var(--h5-line);
   letter-spacing: var(--h5-spacing);
   color: var(--color-dark);
+  /* Live titles vary in length — clamp so every card in the row stays level */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+  min-height: calc(var(--h5-line) * 2);
 }
 
 .product-card__dept {
@@ -80,7 +90,11 @@
   line-height: var(--h6-line);
   letter-spacing: var(--h6-spacing);
   color: var(--color-text);
+  text-transform: capitalize;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
 
 .product-card__prices {

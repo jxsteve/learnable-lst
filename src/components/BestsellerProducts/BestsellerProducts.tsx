@@ -1,26 +1,18 @@
+import { useState } from 'react';
 import { useGetProductsQuery } from '../../features/products/productsApi';
 import ProductCard from '../ProductCard/ProductCard';
 import SectionHeading from '../SectionHeading/SectionHeading';
-import product1 from '../../assets/images/product-1.png';
-import product2 from '../../assets/images/product-2.png';
-import product3 from '../../assets/images/product-3.png';
-import product4 from '../../assets/images/product-4.png';
-import product5 from '../../assets/images/product-5.png';
-import product6 from '../../assets/images/product-6.png';
-import product7 from '../../assets/images/product-7.png';
-import product8 from '../../assets/images/product-8.png';
-import product9 from '../../assets/images/product-9.png';
-import product10 from '../../assets/images/product-10.png';
 import './BestsellerProducts.css';
 
-/** The ten card images as laid out in the Figma design, in order. */
-const PRODUCT_IMAGES = [
-  product1, product2, product3, product4, product5,
-  product6, product7, product8, product9, product10,
-];
+/** The design lays out ten cards; each "load more" reveals another ten. */
+const PAGE_SIZE = 10;
 
 export default function BestsellerProducts() {
-  const { data } = useGetProductsQuery({ limit: 10 });
+  const [limit, setLimit] = useState(PAGE_SIZE);
+  const { data, isLoading, isFetching, isError, refetch } = useGetProductsQuery({ limit });
+
+  const products = data?.products ?? [];
+  const hasMore = data ? products.length < data.total : false;
 
   return (
     <section className="bestseller" id="bestseller">
@@ -31,13 +23,34 @@ export default function BestsellerProducts() {
           subtitle="Problems trying to resolve the conflict between "
         />
 
-        <div className="bestseller__grid">
-          {PRODUCT_IMAGES.map((image, index) => (
-            <ProductCard key={image} image={image} product={data?.products[index]} />
-          ))}
-        </div>
+        {isError ? (
+          <div className="bestseller__status" role="alert">
+            <p>We couldn't load products right now.</p>
+            <button className="bestseller__more" onClick={() => refetch()}>TRY AGAIN</button>
+          </div>
+        ) : (
+          <>
+            <div className="bestseller__grid">
+              {isLoading
+                ? Array.from({ length: PAGE_SIZE }, (_, index) => (
+                    <div key={index} className="bestseller__skeleton" aria-hidden />
+                  ))
+                : products.map((product) => (
+                    <ProductCard key={product.id} product={product} />
+                  ))}
+            </div>
 
-        <button className="bestseller__more">LOAD MORE PRODUCTS</button>
+            {hasMore && (
+              <button
+                className="bestseller__more"
+                disabled={isFetching}
+                onClick={() => setLimit((current) => current + PAGE_SIZE)}
+              >
+                {isFetching ? 'LOADING…' : 'LOAD MORE PRODUCTS'}
+              </button>
+            )}
+          </>
+        )}
       </div>
     </section>
   );
