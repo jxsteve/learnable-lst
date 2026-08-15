@@ -12,7 +12,12 @@
   background: var(--color-white);
   font-family: var(--font-family-card);
   transition: box-shadow 0.25s ease;
+  /* one knob for how bright imagery renders, so the out-of-stock dimming and
+     the hover crossfade cannot fight each other */
+  --pcard-image-opacity: 1;
 }
+
+.pcard--out-of-stock { --pcard-image-opacity: 0.6; }
 
 .pcard:hover,
 .pcard:focus-within { box-shadow: var(--card-shadow); }
@@ -28,19 +33,30 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
+  opacity: var(--pcard-image-opacity);
+  transition: opacity 0.3s ease;
 }
 
 .pcard__image--hover {
   position: absolute;
   inset: 0;
   opacity: 0;
-  transition: opacity 0.3s ease;
 }
 
-.pcard:hover .pcard__image--hover,
-.pcard:focus-within .pcard__image--hover { opacity: 1; }
+/* True crossfade: the base image must fade out as the alternate fades in.
+   Product shots are transparent-backed, so leaving both at full opacity
+   composites the two products on top of each other.
+   Only cards that actually have a second image (--has-hover) fade the base
+   out, otherwise the image would vanish on hover. */
+.pcard--has-hover:hover .pcard__image:not(.pcard__image--hover),
+.pcard--has-hover:focus-within .pcard__image:not(.pcard__image--hover) {
+  opacity: 0;
+}
 
-.pcard--out-of-stock .pcard__image { opacity: 0.6; }
+.pcard--has-hover:hover .pcard__image--hover,
+.pcard--has-hover:focus-within .pcard__image--hover {
+  opacity: var(--pcard-image-opacity);
+}
 
 /* ── Badges ───────────────────────────────── */
 .pcard__badge {

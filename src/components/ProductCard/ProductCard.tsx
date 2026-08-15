@@ -29,7 +29,15 @@ export default function ProductCard({ product }: Props) {
   const filledStars = Math.round(product.rating);
 
   return (
-    <article className={`pcard ${outOfStock ? 'pcard--out-of-stock' : ''}`}>
+    <article
+      className={[
+        'pcard',
+        outOfStock ? 'pcard--out-of-stock' : '',
+        hoverImage ? 'pcard--has-hover' : '',
+      ]
+        .filter(Boolean)
+        .join(' ')}
+    >
       <div className="pcard__media">
         <img src={product.thumbnail} alt={product.title} className="pcard__image" loading="lazy" />
         {hoverImage && (
