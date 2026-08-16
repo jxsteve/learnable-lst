@@ -4,7 +4,7 @@ A responsive e-commerce landing page and shopping cart built for the Learnable
 25.26 Frontend Standardisation Test. The layout is implemented from the provided Figma designs
 and the product catalogue is served live from the DummyJSON API.
 
-**Live site:** _(Netlify URL — to be added once deployed)_
+**Live site:** https://learnablelst.netlify.app
 
 **Repository:** https://github.com/jxsteve/learnable-lst
 
