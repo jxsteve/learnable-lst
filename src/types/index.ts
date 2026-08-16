@@ -99,4 +99,6 @@ export interface CartState {
   items: CartItem[];
   /** Drives the "Successfully added to basket" notification; null when dismissed. */
   lastAdded: ProductSummary | null;
+  /** Whether the cart drawer is open. */
+  isOpen: boolean;
 }
