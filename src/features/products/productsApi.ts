@@ -49,7 +49,20 @@ export const productsApi = createApi({
     getProductById: builder.query<Product, number>({
       query: (id) => `products/${id}`,
     }),
+
+    /**
+     * Products within a category, used to suggest items related to what is
+     * already in the cart.
+     */
+    getProductsByCategory: builder.query<ProductsResponse, { category: string; limit?: number }>({
+      query: ({ category, limit = 8 }) =>
+        `products/category/${encodeURIComponent(category)}?limit=${limit}&select=${SELECT}`,
+    }),
   }),
 });
 
-export const { useGetProductsQuery, useGetProductByIdQuery } = productsApi;
+export const {
+  useGetProductsQuery,
+  useGetProductByIdQuery,
+  useGetProductsByCategoryQuery,
+} = productsApi;

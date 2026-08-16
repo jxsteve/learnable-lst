@@ -1,7 +1,7 @@
-# Bandage — E-Commerce Landing Page
+# Bandage — E-Commerce
 
-A responsive e-commerce landing page built for the Learnable 25.26 Frontend
-Standardisation Test. The layout is implemented from the provided Figma designs
+A responsive e-commerce landing page and shopping cart built for the Learnable
+25.26 Frontend Standardisation Test. The layout is implemented from the provided Figma designs
 and the product catalogue is served live from the DummyJSON API.
 
 **Live site:** _(Netlify URL — to be added once deployed)_
@@ -89,7 +89,7 @@ src/
 │   ├── products/   RTK Query API definition
 │   └── wishlist/   wishlist slice and selectors
 ├── hooks/          shared hooks
-├── pages/          page-level composition
+├── pages/          route-level pages (landing, cart)
 ├── styles/         global reset and design tokens
 ├── types/          shared TypeScript types
 └── utils/          formatting helpers
@@ -139,8 +139,11 @@ select list is derived from its keys so the two cannot drift apart.
 
 ## Implementation notes and assumptions
 
-**Scope.** The brief's final instruction is to build the landing page only, so the
-project is a single page with no router.
+**Scope.** The brief's final instruction is to build the landing page; a shopping
+cart page is included as well, since the opening question asks for one and the
+Functionality criteria grade cart behaviour. `react-router-dom` provides the two
+routes, and `public/_redirects` gives Netlify the SPA fallback so `/cart` resolves
+on a direct visit.
 
 **Prices.** DummyJSON quotes `price` before the available discount, so the amount
 shown as payable is derived as `price × (1 − discountPercentage / 100)`. Prices
@@ -173,10 +176,22 @@ Footer and social links are placeholders (`href="#"`), as no destinations are
 specified.
 
 **Cart.** Adding to the basket updates the header count and shows the confirmation
-notification from the design. The header cart icon opens a drawer with line
-items, quantity steppers, per-line removal, a subtotal and an empty state.
-Subtotals are summed from unrounded prices and formatted once, so quantity does
-not accumulate rounding error.
+notification from the design. The header cart icon links to `/cart`, which
+implements the cart design: line items with stock and rating, quantity steppers,
+per-line removal, an order summary and an empty state. Subtotals are summed from
+unrounded prices and formatted once, so quantity does not accumulate rounding
+error.
+
+**Related products.** The cart page suggests more items from the category of the
+first product in the cart, via `/products/category/{slug}`, excluding anything
+already in the cart. The design shows a static grid; driving it from the cart's
+own contents makes the section meaningful.
+
+**Cart currency.** The cart design prices in Naira. Amounts are shown in USD to
+match what the API actually returns; only the symbol differs from the mockup.
+
+**Delivery charges.** The summary shows the design's "add your delivery address"
+note and excludes delivery from the total, as no address capture exists.
 
 **Wishlist.** Liking a product is held in its own slice; the heart fills and the
 header counter reflects the total.

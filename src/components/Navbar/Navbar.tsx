@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { toggleCart } from '../../features/cart/cartSlice';
+import { Link } from 'react-router-dom';
+import { useAppSelector } from '../../app/hooks';
 import { selectCartCount } from '../../features/cart/cartSelectors';
 import { selectWishlistCount } from '../../features/wishlist/wishlistSelectors';
 import { useBumpOnChange } from '../../hooks/useBumpOnChange';
@@ -36,7 +36,6 @@ const NAV_LINKS = [
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const dispatch = useAppDispatch();
   const cartCount = useAppSelector(selectCartCount);
   const wishlistCount = useAppSelector(selectWishlistCount);
   const cartBumping = useBumpOnChange(cartCount);
@@ -102,14 +101,14 @@ export default function Navbar() {
             <button className="navbar__action" aria-label="Search">
               <img src={searchIcon} alt="" className="navbar__action-icon" />
             </button>
-            <button
+            <Link
+              to="/cart"
               className={`navbar__action ${cartBumping ? 'navbar__action--bump' : ''}`}
               aria-label={`Cart, ${cartCount} item${cartCount === 1 ? '' : 's'}`}
-              onClick={() => dispatch(toggleCart())}
             >
               <img src={cartIcon} alt="" className="navbar__action-icon" />
               <span className="navbar__count" aria-live="polite">{cartCount}</span>
-            </button>
+            </Link>
             <button
               className={`navbar__action navbar__action--wishlist ${wishlistBumping ? 'navbar__action--bump' : ''}`}
               aria-label={`Wishlist, ${wishlistCount} item${wishlistCount === 1 ? '' : 's'}`}
