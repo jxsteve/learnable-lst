@@ -175,6 +175,16 @@ counterpart on a single-page site and points at the call-to-action section.
 Footer and social links are placeholders (`href="#"`), as no destinations are
 specified.
 
+**Cart persistence.** The basket and wishlist are written to localStorage and
+restored on start-up, so a refresh does not empty the cart. Reads are validated
+and guarded, so corrupt or unavailable storage falls back to an empty state
+rather than failing. The add-to-basket notification is deliberately not
+persisted, being transient.
+
+**Quantity stepper.** Stepping down stops at 1 rather than deleting the line;
+removal has its own REMOVE control in the design, and a stepper that silently
+deletes is easy to trigger by accident.
+
 **Cart.** Adding to the basket updates the header count and shows the confirmation
 notification from the design. The header cart icon links to `/cart`, which
 implements the cart design: line items with stock and rating, quantity steppers,

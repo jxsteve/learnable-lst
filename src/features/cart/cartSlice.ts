@@ -29,13 +29,14 @@ const cartSlice = createSlice({
       const item = state.items.find((i) => i.product.id === action.payload);
       if (item) item.quantity += 1;
     },
+    /**
+     * Floors at 1 rather than removing the line. The design gives removal its
+     * own REMOVE control, so stepping down should never silently delete an
+     * item the shopper is only adjusting.
+     */
     decrementQuantity(state, action: PayloadAction<number>) {
       const item = state.items.find((i) => i.product.id === action.payload);
-      if (item && item.quantity > 1) {
-        item.quantity -= 1;
-      } else {
-        state.items = state.items.filter((i) => i.product.id !== action.payload);
-      }
+      if (item && item.quantity > 1) item.quantity -= 1;
     },
     clearCart(state) {
       state.items = [];

@@ -112,6 +112,7 @@ export default function CartPage() {
                             <button
                               className="cart-step"
                               aria-label={`Decrease quantity of ${product.title}`}
+                              disabled={quantity <= 1}
                               onClick={() => dispatch(decrementQuantity(product.id))}
                             >
                               <img src={minusBar} alt="" />

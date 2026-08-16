@@ -176,8 +176,11 @@
   transition: background 0.2s;
 }
 
-.cart-step:hover { background: #d8dcdf; }
+.cart-step:hover:not(:disabled) { background: #d8dcdf; }
 .cart-step img { width: 12px; height: 1.44px; }
+
+/* at a quantity of 1 the only way down is REMOVE */
+.cart-step:disabled { opacity: 0.45; cursor: not-allowed; }
 
 /* the plus is the same bar crossed with a rotated copy */
 .cart-step__cross { position: absolute; transform: rotate(90deg); }
