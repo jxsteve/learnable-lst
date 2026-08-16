@@ -1,7 +1,7 @@
-import heroFurnitureLg from '../../assets/images/hero-furniture-lg.png';
-import heroPlant from '../../assets/images/hero-plant.png';
-import heroLamp from '../../assets/images/hero-lamp.png';
-import heroVases from '../../assets/images/hero-vases.png';
+import heroFurnitureLg from '../../assets/images/hero-furniture-lg.webp';
+import heroPlant from '../../assets/images/hero-plant.webp';
+import heroLamp from '../../assets/images/hero-lamp.webp';
+import heroVases from '../../assets/images/hero-vases.webp';
 import './Hero.css';
 
 type Card = {

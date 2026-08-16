@@ -1,4 +1,4 @@
-import ctaBackground from '../../assets/images/cta-background.png';
+import ctaBackground from '../../assets/images/cta-background.webp';
 import './CtaBanner.css';
 
 export default function CtaBanner() {
