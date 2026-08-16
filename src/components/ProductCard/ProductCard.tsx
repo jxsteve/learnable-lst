@@ -1,11 +1,13 @@
 import type { ProductSummary } from '../../types';
-import { useAppDispatch } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { addToCart } from '../../features/cart/cartSlice';
+import { toggleWishlist } from '../../features/wishlist/wishlistSlice';
+import { selectIsWishlisted } from '../../features/wishlist/wishlistSelectors';
 import { formatPrice, getSalePrice } from '../../utils/format';
 import starFilled from '../../assets/icons/pc-star-filled.svg';
 import starEmpty from '../../assets/icons/pc-star-empty.svg';
-import compareIcon from '../../assets/icons/pc-compare.svg';
 import heartIcon from '../../assets/icons/pc-heart.svg';
+import heartFilledIcon from '../../assets/icons/pc-heart-filled.svg';
 import './ProductCard.css';
 
 interface Props {
@@ -16,6 +18,7 @@ const MAX_STARS = 5;
 
 export default function ProductCard({ product }: Props) {
   const dispatch = useAppDispatch();
+  const isWishlisted = useAppSelector((state) => selectIsWishlisted(state, product.id));
 
   const discount = Math.round(product.discountPercentage);
   const hasDiscount = discount >= 1;
@@ -47,14 +50,18 @@ export default function ProductCard({ product }: Props) {
         {hasDiscount && <span className="pcard__badge">-{discount}%</span>}
         {outOfStock && <span className="pcard__stock-flag">Out of stock</span>}
 
-        <div className="pcard__actions">
-          <button className="pcard__action" aria-label={`Compare ${product.title}`}>
-            <img src={compareIcon} alt="" />
-          </button>
-          <button className="pcard__action" aria-label={`Add ${product.title} to wishlist`}>
-            <img src={heartIcon} alt="" />
-          </button>
-        </div>
+        <button
+          className={`pcard__like ${isWishlisted ? 'pcard__like--on' : ''}`}
+          aria-label={
+            isWishlisted
+              ? `Remove ${product.title} from wishlist`
+              : `Add ${product.title} to wishlist`
+          }
+          aria-pressed={isWishlisted}
+          onClick={() => dispatch(toggleWishlist(product.id))}
+        >
+          <img src={isWishlisted ? heartFilledIcon : heartIcon} alt="" />
+        </button>
       </div>
 
       <p className="pcard__brand">{brand}</p>

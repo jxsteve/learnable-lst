@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useAppSelector } from '../../app/hooks';
 import { selectCartCount } from '../../features/cart/cartSelectors';
+import { selectWishlistCount } from '../../features/wishlist/wishlistSelectors';
+import { useBumpOnChange } from '../../hooks/useBumpOnChange';
 import phoneIcon from '../../assets/icons/phone.svg';
 import mailIcon from '../../assets/icons/mail.svg';
 import instagramIcon from '../../assets/icons/instagram.svg';
@@ -34,6 +36,9 @@ const NAV_LINKS = [
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const cartCount = useAppSelector(selectCartCount);
+  const wishlistCount = useAppSelector(selectWishlistCount);
+  const cartBumping = useBumpOnChange(cartCount);
+  const wishlistBumping = useBumpOnChange(wishlistCount);
 
   return (
     <header className="header">
@@ -96,15 +101,18 @@ export default function Navbar() {
               <img src={searchIcon} alt="" className="navbar__action-icon" />
             </button>
             <button
-              className="navbar__action"
+              className={`navbar__action ${cartBumping ? 'navbar__action--bump' : ''}`}
               aria-label={`Cart, ${cartCount} item${cartCount === 1 ? '' : 's'}`}
             >
               <img src={cartIcon} alt="" className="navbar__action-icon" />
-              <span className="navbar__count">{cartCount}</span>
+              <span className="navbar__count" aria-live="polite">{cartCount}</span>
             </button>
-            <button className="navbar__action navbar__action--wishlist" aria-label="Wishlist">
+            <button
+              className={`navbar__action navbar__action--wishlist ${wishlistBumping ? 'navbar__action--bump' : ''}`}
+              aria-label={`Wishlist, ${wishlistCount} item${wishlistCount === 1 ? '' : 's'}`}
+            >
               <img src={heartIcon} alt="" className="navbar__action-icon" />
-              <span className="navbar__count">1</span>
+              <span className="navbar__count" aria-live="polite">{wishlistCount}</span>
             </button>
 
             <button

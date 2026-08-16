@@ -85,22 +85,13 @@
   white-space: nowrap;
 }
 
-/* ── Hover actions ────────────────────────── */
-.pcard__actions {
+/* ── Like control ─────────────────────────────
+   The design shows two circular controls; only the wishlist one does
+   anything, so the compare icon is gone rather than sitting there inert. */
+.pcard__like {
   position: absolute;
+  top: 8px;
   right: 8px;
-  bottom: 8px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  opacity: 0;
-  transition: opacity 0.25s ease;
-}
-
-.pcard:hover .pcard__actions,
-.pcard:focus-within .pcard__actions { opacity: 1; }
-
-.pcard__action {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -109,11 +100,43 @@
   border-radius: 50%;
   background: var(--color-white);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-  transition: transform 0.15s ease;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 0.25s ease, transform 0.25s ease, box-shadow 0.2s ease;
 }
 
-.pcard__action:hover { transform: scale(1.06); }
-.pcard__action img { width: 24px; height: 24px; }
+.pcard:hover .pcard__like,
+.pcard:focus-within .pcard__like {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* A liked item stays visible at rest, otherwise the state is invisible
+   until you happen to hover the card again. */
+.pcard__like--on {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.pcard__like:hover { box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18); }
+.pcard__like:active { transform: scale(0.92); }
+
+.pcard__like img {
+  width: 20px;
+  height: 19px;
+}
+
+/* Pop the heart the moment it becomes liked. */
+.pcard__like--on img {
+  animation: pcard-like-pop 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes pcard-like-pop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.35); }
+  70%  { transform: scale(0.92); }
+  100% { transform: scale(1); }
+}
 
 /* ── Text ─────────────────────────────────── */
 .pcard__brand {
@@ -229,14 +252,16 @@
 
 /* Touch devices get no hover, so keep the controls permanently available */
 @media (hover: none) {
-  .pcard__footer,
-  .pcard__actions { opacity: 1; }
+  .pcard__footer { opacity: 1; }
+  .pcard__like { opacity: 1; transform: translateY(0); }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .pcard,
+  .pcard__image,
   .pcard__image--hover,
-  .pcard__actions,
   .pcard__footer,
-  .pcard__action { transition: none; }
+  .pcard__like { transition: none; }
+
+  .pcard__like--on img { animation: none; }
 }

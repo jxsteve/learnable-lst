@@ -70,7 +70,36 @@ a {
 
 ul { list-style: none; }
 img { max-width: 100%; display: block; }
-button { cursor: pointer; border: none; background: none; font-family: inherit; }
+button { cursor: pointer; border: none; background: none; font-family: inherit; color: inherit; }
+
+/* ── Focus ────────────────────────────────────
+   One visible ring in the brand blue, shown only for keyboard users so it
+   never appears on mouse clicks. Replaces the browser's hairline default. */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+:focus:not(:focus-visible) { outline: none; }
+
+/* Selection picks up the brand colour rather than the OS default. */
+::selection {
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+
+/* Anchored sections clear the viewport edge when jumped to. */
+[id] { scroll-margin-top: 24px; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
 
 /* Section layout and typography live with their components — each one maps to
    specific Figma nodes and container widths rather than a shared helper. */
