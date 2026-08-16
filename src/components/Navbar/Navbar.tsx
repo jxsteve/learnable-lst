@@ -24,14 +24,19 @@ const SOCIALS = [
   { href: '#', label: 'Twitter', icon: twitterIcon },
 ];
 
-/** Each link targets a section id on the landing page. */
+/**
+ * Each item targets a section on the landing page. The paths are absolute so
+ * the links still work from other routes: a bare "#home" only sets the hash on
+ * whatever page you are already on, and those sections do not exist off the
+ * landing page.
+ */
 const NAV_LINKS = [
-  { href: '#home', label: 'Home' },
-  { href: '#bestseller', label: 'Shop', dropdown: true },
-  { href: '#services', label: 'About' },
-  { href: '#blog', label: 'Blog' },
-  { href: '#contact', label: 'Contact' },
-  { href: '#pages', label: 'Pages' },
+  { href: '/#home', label: 'Home' },
+  { href: '/#bestseller', label: 'Shop', dropdown: true },
+  { href: '/#services', label: 'About' },
+  { href: '/#blog', label: 'Blog' },
+  { href: '/#contact', label: 'Contact' },
+  { href: '/#pages', label: 'Pages' },
 ];
 
 export default function Navbar() {
@@ -75,19 +80,19 @@ export default function Navbar() {
       {/* ── Main navbar ── */}
       <nav className="navbar">
         <div className="navbar__inner">
-          <a href="#home" className="navbar__logo" onClick={() => setMenuOpen(false)}>Bandage</a>
+          <Link to="/#home" className="navbar__logo" onClick={() => setMenuOpen(false)}>Bandage</Link>
 
           <ul className={`navbar__nav ${menuOpen ? 'navbar__nav--open' : ''}`}>
             {NAV_LINKS.map((link) => (
               <li key={link.label}>
-                <a
-                  href={link.href}
+                <Link
+                  to={link.href}
                   className={link.dropdown ? 'navbar__link navbar__link--dropdown' : 'navbar__link'}
                   onClick={() => setMenuOpen(false)}
                 >
                   {link.label}
                   {link.dropdown && <img src={chevronIcon} alt="" className="navbar__chevron" />}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>

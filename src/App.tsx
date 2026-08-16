@@ -4,13 +4,13 @@ import LandingPage from './pages/LandingPage/LandingPage';
 import CartPage from './pages/CartPage/CartPage';
 import Footer from './components/Footer/Footer';
 import AddToBasketNotification from './components/AddToBasketNotification/AddToBasketNotification';
-import ScrollToTop from './components/ScrollToTop/ScrollToTop';
+import ScrollManager from './components/ScrollManager/ScrollManager';
 import './styles/global.css';
 
 export default function App() {
   return (
     <>
-      <ScrollToTop />
+      <ScrollManager />
       <Navbar />
       <Routes>
         <Route path="/" element={<LandingPage />} />

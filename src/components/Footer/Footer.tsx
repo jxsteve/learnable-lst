@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import facebookIcon from '../../assets/icons/footer-facebook.svg';
 import instagramIcon from '../../assets/icons/footer-instagram.svg';
 import twitterIcon from '../../assets/icons/footer-twitter.svg';
@@ -22,7 +23,7 @@ export default function Footer() {
       {/* ── Brand band ── */}
       <div className="footer__top">
         <div className="footer__container footer__top-inner">
-          <a href="#home" className="footer__logo">Bandage</a>
+          <Link to="/#home" className="footer__logo">Bandage</Link>
           <div className="footer__socials">
             {SOCIALS.map((social) => (
               <a key={social.label} href="#" className="footer__social" aria-label={social.label}>
