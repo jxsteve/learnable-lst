@@ -173,8 +173,19 @@ Footer and social links are placeholders (`href="#"`), as no destinations are
 specified.
 
 **Cart.** Adding to the basket updates the header count and shows the confirmation
-notification from the design. The slice also implements quantity and removal
-actions that are not currently surfaced in the UI.
+notification from the design. The header cart icon opens a drawer with line
+items, quantity steppers, per-line removal, a subtotal and an empty state.
+Subtotals are summed from unrounded prices and formatted once, so quantity does
+not accumulate rounding error.
+
+**Wishlist.** Liking a product is held in its own slice; the heart fills and the
+header counter reflects the total.
+
+**Responsiveness.** The layout is verified free of horizontal overflow at 320,
+768, 1024 and 1440px. The stylesheets are authored desktop-first, using
+`max-width` breakpoints, rather than mobile-first with `min-width`; the
+responsive behaviour is equivalent, but inverting the breakpoints would better
+match a mobile-first brief and is the first thing I would change with more time.
 
 ---
 
