@@ -1,224 +1,150 @@
-# Bandage — E-Commerce
+# Bandage
 
-A responsive e-commerce landing page and shopping cart built for the Learnable
-25.26 Frontend Standardisation Test. The layout is implemented from the provided Figma designs
-and the product catalogue is served live from the DummyJSON API.
+An e-commerce landing page and shopping cart, built from Figma designs for the
+Learnable 25.26 Frontend Standardisation Test. Products are pulled live from the
+DummyJSON API.
 
-**Live site:** https://learnablelst.netlify.app
+**Live:** https://learnablelst.netlify.app
+**Repo:** https://github.com/jxsteve/learnable-lst
 
-**Repository:** https://github.com/jxsteve/learnable-lst
+## Stack
 
----
+React 19 + Vite, TypeScript, vanilla CSS, Redux Toolkit and RTK Query. No CSS
+framework or component library — every style here is hand-written.
 
-## Tech stack
+## Running it
 
-| Concern          | Choice                                  |
-| ---------------- | --------------------------------------- |
-| Framework        | React 19 + Vite 8                       |
-| Language         | TypeScript                              |
-| Styling          | Vanilla CSS (one stylesheet per component) |
-| State management | Redux Toolkit                           |
-| Data fetching    | RTK Query                               |
-| Linting          | oxlint                                  |
-
-No CSS framework or component library is used; every style in the project is
-hand-written CSS driven by custom properties.
-
----
-
-## Getting started
-
-### Prerequisites
-
-- Node.js 20.19+ or 22.12+ (developed on Node 24)
-- npm
-
-### Install
+Needs Node 20.19+ (I used Node 24).
 
 ```bash
 git clone https://github.com/jxsteve/learnable-lst.git
 cd learnable-lst
 npm install
-```
-
-### Run locally
-
-```bash
 npm run dev
 ```
 
-Vite prints a local URL (`http://localhost:5173` by default). The app fetches
-products from the public DummyJSON API, so an internet connection is needed for
-the product grid to populate.
-
-### Other scripts
+The product grid needs an internet connection, since it fetches from DummyJSON.
 
 ```bash
-npm run build     # type-check with tsc, then produce a production build in dist/
-npm run preview   # serve the built output locally
-npm run lint      # run oxlint
+npm run build     # type-check, then build to dist/
+npm run preview   # serve the build locally
+npm run lint      # oxlint
 ```
 
----
+## Deploying
 
-## Deployment
+Static build, deployed on Netlify from `main`:
 
-The site is a static build and deploys to Netlify directly from this repository.
+- Build command: `npm run build`
+- Publish directory: `dist`
 
-| Setting            | Value           |
-| ------------------ | --------------- |
-| Build command      | `npm run build` |
-| Publish directory  | `dist`          |
-| Node version       | 20 or later     |
+No environment variables — the API is public and its base URL lives in
+`productsApi.ts`. `public/_redirects` holds the SPA fallback so `/cart` works on
+a direct visit instead of 404ing.
 
-To deploy: connect the repository in Netlify, apply the settings above, and
-deploy the `main` branch. No environment variables are required — the API is
-public and its base URL is set in `src/features/products/productsApi.ts`.
-
----
-
-## Project structure
+## Structure
 
 ```
 src/
-├── app/            store configuration and typed Redux hooks
-├── assets/         icons and images exported from Figma
-├── components/     one folder per component, each with its own stylesheet
-├── features/
-│   ├── cart/       cart slice and selectors
-│   ├── products/   RTK Query API definition
-│   └── wishlist/   wishlist slice and selectors
-├── hooks/          shared hooks
-├── pages/          route-level pages (landing, cart)
-├── styles/         global reset and design tokens
-├── types/          shared TypeScript types
-└── utils/          formatting helpers
+├── app/         store, typed hooks, localStorage persistence
+├── assets/      icons and images exported from Figma
+├── components/  one folder per component, styles alongside
+├── features/    cart, wishlist, products (RTK Query)
+├── hooks/
+├── pages/       LandingPage, CartPage
+├── styles/      reset and design tokens
+├── types/
+└── utils/
 ```
 
-Components are grouped by folder rather than by file type so that a component's
-markup and styles sit together. State lives under `features/`, following the
-Redux Toolkit convention of one slice per domain.
-
----
+Components keep their markup and CSS together. State is grouped by domain under
+`features/`, one slice each.
 
 ## Design tokens
 
-`src/styles/global.css` holds the colours, type scale and container widths as CSS
-custom properties, taken from the Figma variables. Components reference the
-tokens rather than hard-coding values, so the two stay in step.
+`styles/global.css` holds the colours, type scale and container widths as CSS
+variables, taken from the Figma variables, so components reference tokens rather
+than hardcoded values.
 
-The page uses two distinct kits, because the brief supplies two separate design
-files:
+There are two sets, because the brief supplied two separate Figma files: the
+landing page uses Montserrat with a `--color-*` palette, and the product card
+uses Rubik with its own greys as `--card-*`. I kept them separate instead of
+merging them into one palette.
 
-- **Landing page** — Montserrat, with the `--color-*` palette.
-- **Product card** — Rubik, with its own greys, exposed as `--card-*` tokens.
+## API
 
-They are deliberately kept separate rather than merged into one palette.
+Three endpoints on one RTK Query API, all against DummyJSON.
 
----
+**Only the fields I use.** The list request sends `?select=`, dropping
+description, dimensions, warranty, shipping and the rest that never reach the
+screen — about 40% off each response. `ProductSummary` describes exactly what
+comes back, and the select list is derived from its keys so the two can't drift.
 
-## API integration
+**Real pagination.** Load more pages with `skip` and merges each page into a
+single cache entry, rather than growing `limit` and re-downloading everything you
+already have. Forty products went from ~148 KB to ~35 KB. The merge de-duplicates
+by id, because StrictMode double-invokes in development and would otherwise
+append a page twice.
 
-Products come from [DummyJSON](https://dummyjson.com/docs/products) via RTK Query.
+**Caching.** Pages are kept for five minutes, and `setupListeners` is called in
+the store — without it `refetchOnReconnect` silently does nothing.
 
-- **Field selection.** The list request sends `?select=` with only the fields the
-  card renders, which removes roughly 40% of each response.
-- **Pagination.** "Load more" pages with `skip` and merges each page into a single
-  cache entry, so a page fetches only the next ten products instead of
-  re-requesting everything. Loading 40 products transfers about 35 KB rather than
-  148 KB.
-- **Caching.** Pages are held for five minutes, and `setupListeners` is wired up so
-  a request that failed while offline retries on reconnect.
-- **States.** The grid renders skeletons while loading and offers a retry control
-  if the request fails.
+The grid shows skeletons while loading and a retry button if the request fails.
 
-`ProductSummary` is the type describing exactly what `select` returns, and the
-select list is derived from its keys so the two cannot drift apart.
+## Notes and assumptions
 
----
+**Scope.** The brief's closing line says to build the landing page, but the
+opening question asks for a cart page and the marking scheme grades cart
+behaviour, so both are here.
 
-## Implementation notes and assumptions
+**Prices.** DummyJSON quotes `price` before the discount, so the payable amount
+is derived (`price × (1 − discountPercentage / 100)`). That calculation lives in
+`utils/format.ts` so the card, the notification and the cart can't disagree.
+Everything is shown in USD to match the data, even though the cart mockup is in
+Naira — the layout matches, only the symbol differs.
 
-**Scope.** The brief's final instruction is to build the landing page; a shopping
-cart page is included as well, since the opening question asks for one and the
-Functionality criteria grade cart behaviour. `react-router-dom` provides the two
-routes, and `public/_redirects` gives Netlify the SPA fallback so `/cart` resolves
-on a direct visit.
+**Missing data.** Roughly half the catalogue has no `brand`, so the card falls
+back to `category` and the type marks it optional. About 60% of products have a
+second image; the hover crossfade is skipped for the rest rather than fading the
+card to blank.
 
-**Prices.** DummyJSON quotes `price` before the available discount, so the amount
-shown as payable is derived as `price × (1 − discountPercentage / 100)`. Prices
-are formatted in USD, matching the API's own currency, rather than the euro shown
-in the card mockup. `src/utils/format.ts` is the single place to change this.
+**Where the two Figma files disagree.** The landing page lays out five 183px
+product tiles, but the standalone product card design is 300px wide. I followed
+the card, which fits four across. Similarly, the mockup grows the card on hover
+to reveal "Add to basket" — I reserve that space permanently instead, so the grid
+doesn't reflow under the cursor. Hover-only controls stay visible on touch, which
+has no hover to reveal them.
 
-**Missing brand.** Roughly half of the catalogue has no `brand` field, so the card
-falls back to `category`. `brand` is typed as optional to reflect this.
+**Things I read as mockup artefacts.** The testimonials frame clips the image
+grid, cutting the bottom row of photos; the tiles render in full here.
 
-**Second product image.** The card crossfades to an alternate shot on hover. Around
-60% of products ship a second image; where there is none, the crossfade is skipped
-rather than fading the card to blank.
+**Cart behaviour.** Cart and wishlist persist to localStorage and restore on
+start-up, so a refresh doesn't empty the basket — the read is shape-checked and
+guarded, falling back to an empty cart if the stored value is unusable. Subtotals
+are summed unrounded and formatted once, so quantity doesn't accumulate rounding
+error. Stepping quantity down stops at 1: removal has its own control, and a
+stepper that silently deletes is too easy to hit by accident.
 
-**Card footer.** The mockup grows the card from 442px to 482px on hover to reveal
-"Add to basket". The space is reserved at all times instead, so the grid does not
-reflow under the cursor. Hover-only controls are always visible on touch devices,
-which have no hover state to reveal them.
+**Related products** come from the category of the first item in the cart,
+excluding anything already there. The mockup shows a static grid; driving it from
+the cart makes the section do something.
 
-**Testimonials gallery.** The Figma frame clips the 3×3 image grid to 426px of
-460px of content, cutting the bottom row of photographs. This is treated as an
-artefact of the mockup and the tiles render in full.
-
-**Product grid columns.** The landing page frame lays out five 183px product tiles.
-The separate product card design is 300px wide, so the grid follows the card and
-fits four columns at desktop width. The two files cannot both be satisfied.
-
-**Navigation.** Nav items scroll to sections on the page. "Pages" has no natural
-counterpart on a single-page site and points at the call-to-action section.
-Footer and social links are placeholders (`href="#"`), as no destinations are
-specified.
-
-**Cart persistence.** The basket and wishlist are written to localStorage and
-restored on start-up, so a refresh does not empty the cart. Reads are validated
-and guarded, so corrupt or unavailable storage falls back to an empty state
-rather than failing. The add-to-basket notification is deliberately not
-persisted, being transient.
-
-**Quantity stepper.** Stepping down stops at 1 rather than deleting the line;
-removal has its own REMOVE control in the design, and a stepper that silently
-deletes is easy to trigger by accident.
-
-**Cart.** Adding to the basket updates the header count and shows the confirmation
-notification from the design. The header cart icon links to `/cart`, which
-implements the cart design: line items with stock and rating, quantity steppers,
-per-line removal, an order summary and an empty state. Subtotals are summed from
-unrounded prices and formatted once, so quantity does not accumulate rounding
-error.
-
-**Related products.** The cart page suggests more items from the category of the
-first product in the cart, via `/products/category/{slug}`, excluding anything
-already in the cart. The design shows a static grid; driving it from the cart's
-own contents makes the section meaningful.
-
-**Cart currency.** The cart design prices in Naira. Amounts are shown in USD to
-match what the API actually returns; only the symbol differs from the mockup.
-
-**Delivery charges.** The summary shows the design's "add your delivery address"
-note and excludes delivery from the total, as no address capture exists.
-
-**Wishlist.** Liking a product is held in its own slice; the heart fills and the
-header counter reflects the total.
-
-**Responsiveness.** The layout is verified free of horizontal overflow at 320,
-768, 1024 and 1440px. The stylesheets are authored desktop-first, using
-`max-width` breakpoints, rather than mobile-first with `min-width`; the
-responsive behaviour is equivalent, but inverting the breakpoints would better
-match a mobile-first brief and is the first thing I would change with more time.
-
----
+**Placeholders.** Footer and social links are `href="#"`, and "Pages" in the nav
+has no real counterpart on a two-page site, so it points at the CTA section.
 
 ## Accessibility
 
-- A single visible focus ring, shown for keyboard users only.
-- Interactive controls carry accessible names; the wishlist toggle exposes
-  `aria-pressed`, and live counters are announced politely.
-- Decorative images use empty `alt`; meaningful images are described.
-- `prefers-reduced-motion` disables animation and smooth scrolling.
-- Verified free of horizontal overflow at 320, 768, 1024 and 1440px.
+Keyboard-only focus rings, accessible names on every control, `aria-pressed` on
+the wishlist toggle, empty `alt` on decorative images, and `prefers-reduced-motion`
+honoured. Checked for horizontal overflow at 320, 768, 1024 and 1440px.
+
+## What I'd change with more time
+
+The stylesheets are desktop-first (`max-width` breakpoints). Behaviour is correct
+at every width, but the brief asks for mobile-first and I'd invert them.
+
+There are no tests. The price calculation and the cart reducers would be first —
+pure functions with real edge cases.
+
+Related products key off a single cart item, so a mixed basket only gets
+suggestions for one category.
