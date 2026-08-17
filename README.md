@@ -66,10 +66,8 @@ Components keep their markup and CSS together. State is grouped by domain under
 variables, taken from the Figma variables, so components reference tokens rather
 than hardcoded values.
 
-There are two sets, because the brief supplied two separate Figma files: the
-landing page uses Montserrat with a `--color-*` palette, and the product card
-uses Rubik with its own greys as `--card-*`. I kept them separate instead of
-merging them into one palette.
+The landing page uses Montserrat with a `--color-*` palette, and the product card
+uses Rubik with its own greys as `--card-*`.
 
 ## API
 
@@ -108,8 +106,7 @@ back to `category` and the type marks it optional. About 60% of products have a
 second image; the hover crossfade is skipped for the rest rather than fading the
 card to blank.
 
-**Where the two Figma files disagree.** The landing page lays out five 183px
-product tiles, but the standalone product card design is 300px wide. I followed
+The landing page lays out five 183px product tiles, but the standalone product card design is 300px wide. I followed
 the card, which fits four across. Similarly, the mockup grows the card on hover
 to reveal "Add to basket" — I reserve that space permanently instead, so the grid
 doesn't reflow under the cursor. Hover-only controls stay visible on touch, which
